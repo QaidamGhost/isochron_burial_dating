@@ -1,0 +1,43 @@
+MATLAB scripts for calculating isochron burial age using paired cosmogenic nuclides.
+
+June 10, 2022
+
+The MATLAB script "york_Vermeesch.m" was ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018. Other .m-files in this directory were written by Yizhou Yang. See file "NOTICE" for copyright and licensing notice pertaining to all .m-files in this directory.
+
+A. List of .m-files:
+
+calculate_m: Calculate equation (20) in Mahon, 1996
+
+calculate_n: Calculate equation (21) in Mahon, 1996
+
+is_equal: Compare two values to check if they are equal or not
+
+isochron_Erlanger: An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
+
+kill_outliers_Odom: Statistically remove reworked clasts following Odom, 2020
+
+plot_isochron: Plot isochron line, production ratio line, and errorbars of samples
+
+sigma_slope: Re-calculate the error of slope by equation (17) in Mahon, 1996
+
+york_Vermeesch: York fit script modified after york.R in IsoplotR by Vermeesch, 2018
+
+B. References:
+
+Erlanger, Erica D. "Rock uplift, erosion, and tectonic uplift of SouthAfrica determined with cosmogenic aluminum-26 and beryllium-10." Ph. D.Thesis (2010).
+
+Erlanger, Erica D., Darryl E. Granger, and Ryan J. Gibbon. "Rock uplift rates in South Africa from isochron burial dating of fluvial and marine terraces." Geology 40.11 (2012): 1019-1022.
+
+Granger, D. E. "Cosmogenic nuclide burial dating in archaeology and paleoanthropology." (2014): 81-97.
+
+Mahon, Keith I. "The New “York” regression: Application of an improved statistical method to geochemistry." International Geology Review 38.4 (1996): 293-303.
+
+Titterington, D. Michael, and Alex N. Halliday. "On the fitting of parallel isochrons and the method of maximum likelihood." Chemical Geology 26.3-4 (1979): 183-195.
+
+Vermeesch, Pieter. "IsoplotR: A free and open toolbox for geochronology." Geoscience Frontiers 9.5 (2018): 1479-1493.
+
+William III, E. Odom. Dating the Cenozoic incision history of the Tennessee and Shenandoah Rivers with cosmogenic nuclides and 40Ar/39Ar in manganese oxides. Diss. Purdue University Graduate School, 2020.
+
+York, Derek. "Least squares fitting of a straight line with correlated errors." Earth and planetary science letters 5 (1968): 320-324.
+
+York, Derek, et al. "Unified equations for the slope, intercept, and standard errors of the best straight line." American journal of physics 72.3 (2004): 367-375.
