@@ -17,10 +17,17 @@ function plot_isochron(a,b,sigma_b,linearized_data,data,removed_data,...
 % init_Rinh: initial guess of Rinh (unitless; scalar)
 
     % find the range of axis x and y
-    total_x =[linearized_data.x data.x removed_data.x 0];
-    total_dx=[linearized_data.dx data.dx removed_data.dx 0];
-    total_y =[data.y removed_data.y a 0];
-    total_dy=[data.dy removed_data.dy 0 0];
+    if removed_data.x(:,1)==-1
+        total_x =[linearized_data.x data.x 0];
+        total_dx=[linearized_data.dx data.dx 0];
+        total_y =[data.y a 0];
+        total_dy=[data.dy 0 0];
+    else
+        total_x =[linearized_data.x data.x removed_data.x 0];
+        total_dx=[linearized_data.dx data.dx removed_data.dx 0];
+        total_y =[data.y removed_data.y a 0];
+        total_dy=[data.dy removed_data.dy 0 0];
+    end
     [max_x,~]=max(total_x+total_dx);
     [min_x,~]=min(total_x-total_dx);
     [max_y,~]=max(total_y+total_dy);
@@ -66,9 +73,11 @@ function plot_isochron(a,b,sigma_b,linearized_data,data,removed_data,...
     errorbar(linearized_data.x,linearized_data.y,linearized_data.dy,'ko');
     errorbar(data.x,data.y,data.dx,'horizontal','o','Color',[.5 .5 .5]);
     errorbar(data.x,data.y,data.dy,'o','Color',[.5 .5 .5]);
+    if removed_data.x(:,1)~=-1
     errorbar(removed_data.x,removed_data.y,removed_data.dx,'horizontal',...
         ':o','Color',[.5 .5 .5]);
     errorbar(removed_data.x,removed_data.y,removed_data.dy,':o','Color',...
         [.5 .5 .5]);
+    end
     hold off;
 end
