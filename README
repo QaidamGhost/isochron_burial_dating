@@ -41,3 +41,13 @@ William III, E. Odom. Dating the Cenozoic incision history of the Tennessee and 
 York, Derek. "Least squares fitting of a straight line with correlated errors." Earth and planetary science letters 5 (1968): 320-324.
 
 York, Derek, et al. "Unified equations for the slope, intercept, and standard errors of the best straight line." American journal of physics 72.3 (2004): 367-375.
+
+C. These scripts passed tests under the PC configurations below:
+
+CPU: AMD RYZEN R5 3600X
+
+Motherboard: MSI MEG X570 ACE
+
+OS: WINDOWS 10 x64 21H2
+
+Matlab version: 2021b
