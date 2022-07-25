@@ -29,6 +29,13 @@ function [new_data,removed_data,MSWD] = kill_outliers_Odom(data,alpha)
 % removed_data: ditto
 % MSWD (unitless; scalar)
 
+    % if no sample is removed
+    removed_data.x(:,1)=-1;
+    removed_data.dx(:,1)=-1;
+    removed_data.y(:,1)=-1;
+    removed_data.dy(:,1)=-1;
+    MSWD=-1;
+
     if (nargin<2)
         alpha=0.05;
     end
