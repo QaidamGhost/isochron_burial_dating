@@ -121,5 +121,5 @@ function [bur_age,sigma_bur_age] = isochron_Erlanger(data,init_Rinh, ...
     sigma_bur_age=std(cache);
     % plot
     plot_isochron(a,b,sigma_b,data,data_backup,removed_data,init_Rinh);
-    fprintf('Burial age is %d Myr, 1σ error is %d Myr.\n',bur_age,sigma_bur_age);
+    fprintf('Burial age is %f Myr, 1 sigma error is %f Myr.\n',bur_age,sigma_bur_age);
 end
