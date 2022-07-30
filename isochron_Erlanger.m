@@ -48,7 +48,7 @@ function [bur_age,sigma_bur_age] = isochron_Erlanger(data,init_Rinh, ...
     % mean life for 10Be, 26Al, and bur
     tau_10=2.001;   % Chmeleff et al., 2010; Korshchinek et al., 2010
     % sigma_tau_10=0.017;
-    tau_26=1.017;   % Norris et al., 1983
+    tau_26=1.034;   % Samworth et al., 1972
     % sigma_tau_26=0.035;
     tau_bur=1/(1/tau_26-1/tau_10);  % Granger, 2014, eqn17
     
