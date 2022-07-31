@@ -43,7 +43,7 @@ function [new_data,removed_data,MSWD] = kill_outliers_Odom(data,alpha)
     out = york_Vermeesch(data,alpha);
     if (out.mswd<=1)
         new_data=data;
-        disp('No reworked clast is precluded.');
+        disp('No reworked clast is precluded.\n');
         return;
     end
     
@@ -67,10 +67,10 @@ function [new_data,removed_data,MSWD] = kill_outliers_Odom(data,alpha)
         if (max_wd<=max_dev)
             new_data=data;
             if (count==0)
-                disp('No reworked clast is precluded.');
+                disp('No reworked clast is precluded.\n');
             else
                 if (count==1)
-                    disp('1 reworked clast is precluded.');
+                    disp('1 reworked clast is precluded.\n');
                 else
                     fprintf('%d reworked clasts are precluded.\n',count);
                 end
@@ -80,15 +80,15 @@ function [new_data,removed_data,MSWD] = kill_outliers_Odom(data,alpha)
         if (b*X(i)+a-Y(i)<=0) % the outlier is above the isochron line
             new_data=data;
             if (count==0)
-                disp('No reworked clast is precluded.');
+                disp('No reworked clast is precluded.\n');
             else
                 if (count==1)
-                    disp('1 reworked clast is precluded.');
+                    disp('1 reworked clast is precluded.\n');
                 else
                     fprintf('%d reworked clasts are precluded.\n',count);
                 end
             end
-            fprintf('MSWD is beyond "1" and might still be high.');
+            fprintf('MSWD is beyond "1" and might still be high.\n');
             return;
         end
         % remove the outlier
@@ -106,7 +106,7 @@ function [new_data,removed_data,MSWD] = kill_outliers_Odom(data,alpha)
         MSWD=out.mswd;
         if(out.mswd<=1)
             if (count==1)
-                disp('1 reworked clast is precluded.');
+                disp('1 reworked clast is precluded.\n');
             else
                 fprintf('%d reworked clasts are precluded.\n',count);
             end
