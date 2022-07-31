@@ -60,13 +60,13 @@ function [bur_age,sigma_bur_age] = isochron_Erlanger(data,init_Rinh, ...
     old_b=0;    % slope determined by previous iteration
     n=size(data.x,2);   % number of samples
     if n==1
-        disp('Error! Only one sample!');
+        disp('Error! Only one sample!\n');
         bur_age=NaN;
         sigma_bur_age=NaN;
         return;
     end
     if n==2
-        disp('Only two samples! Isochron-line is fully determined!')
+        disp('Only two samples! Isochron-line is fully determined!\n')
     end
     Rinh=zeros(1,n);
     for i=1:n
