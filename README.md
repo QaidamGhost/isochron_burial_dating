@@ -21,6 +21,16 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
  3. Run "isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,z,rho,alpha);" in the command window.
  4. Wait for the plots and values of burial age in the command window.
 
+## Software Version and Dependency
+ - Matlab 2021b and higher version.
+ - Optimization Toolbox 9.2 and higher version.
+ - Statistics and Machine Learning Toolbox 12.2 and higher version.
+ - Curve Fitting Toolbox 3.6 and higher version.
+
+## Platform
+ - Intel i9-9900K / HP OMEN by HP Obelisk Desktop 875-1xxx / Windows 10 21H2
+ - AMD RYZEN R5-3600x / MSI B450m MORTAR / Windows 10 21H2
+
 ## References
  - Balco, Greg, and Charles W. Rovey. "An isochron method for cosmogenic-nuclide dating of buried soils and sediments." American Journal of Science 308.10 (2008): 1083-1114.
  - Erlanger, Erica D. "Rock uplift, erosion, and tectonic uplift of South Africa determined with cosmogenic aluminum-26 and beryllium-10." Ph. D. Thesis (2010).
