@@ -35,7 +35,7 @@ function [bur_age,upper_sigma_bur_age,lower_sigma_bur_age]=simple_burial_age(dat
         [Pn,sigma_Pn,Pms,sigma_Pms,Pmf,sigma_Pmf]=production_rate(measured_lat(i),measured_elv(i),0,2.65,10);
         P100(i)=Pn+Pms+Pmf;
         sigma_P100(i)=sigma_Pn+sigma_Pms+sigma_Pmf;
-        [Pn,sigma_Pn,Pms,sigma_Pms,Pmf,sigma_Pmf]=P26_surface(measured_lat(i),measured_elv(i),0,2.65,26);
+        [Pn,sigma_Pn,Pms,sigma_Pms,Pmf,sigma_Pmf]=production_rate(measured_lat(i),measured_elv(i),0,2.65,26);
         P260(i)=Pn+Pms+Pmf;
         sigma_P260(i)=sigma_Pn+sigma_Pms+sigma_Pmf;
     end
