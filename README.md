@@ -11,7 +11,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
  - plot_isochron: Plot isochron line, production ratio line, and errorbars of samples
  - production_rate: Calculate 10Be or 26Al Production Rates on the surface or at a given depth from Spallation and Muons.
  - remove_outliers: Statistically remove the reworked clast(s) following Odom, 2020
- - simple_burial_age: Calculate the simple burial age of each sample following the equation 22 in Granger, 2014.
+ - simple_burial_age: Calculate the simple burial age of each sample.
  - york: A "york fit" script modified after york.R in IsoplotR by Vermeesch, 2018
  - york_fixed_intercept: A "york fit with a fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
 
