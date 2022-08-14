@@ -1,10 +1,10 @@
-Isochron_burial_dating (Matlab scripts for calculating cosmogenic nuclides burial age using the isochron method)
+isochron_burial_dating (Matlab scripts for calculating cosmogenic nuclides burial age using the isochron method)
 Copyright (C) 2022 Yizhou Yang
 
 This software is licensed under the GPL, Version 3.
 
-Isochron_burial_dating is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+isochron_burial_dating is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-Isochron_burial_dating is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+isochron_burial_dating is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Isochron_burial_dating. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with isochron_burial_dating. If not, see <https://www.gnu.org/licenses/>.
