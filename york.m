@@ -14,25 +14,25 @@ function out=york(data,alpha)
 
 %% Arguments:
 % data must have fields (similar to the scripts in Balco and Rovey, 2008):
-%   data.x: x-values (1xn vector)
-%   data.dx: 1 sigma absolute error of x-values (1xn vector)
-%   data.y: y-values (1xn vector)
-%   data.dy: 1 sigma absolute error of y-values (1xn vector)
-%   data.covxy: correlation coefficients (1xn vector; optionally)
-% alpha: cutoff value for confidence intervals (scalar)
+%   data.x: x-values (any unit; 1xn vector)
+%   data.dx: 1 sigma absolute error of x-values (ditto; 1xn vector)
+%   data.y: y-values (ditto; 1xn vector)
+%   data.dy: 1 sigma absolute error of y-values (ditto; 1xn vector)
+%   data.covxy: correlation coefficients (unitless; 1xn vector; optionally)
+% alpha: cutoff value for confidence intervals (unitless; scalar)
 
 %% Output:
 % out have fields as:
-%   out.alpha: value of the eponymous input argument (scalar)
-%   out.a: intercept of the straight line fit (scalar)
-%   out.sa: standard error of the intercept (scalar)
-%   out.b: slope of the fit (scalar)
-%   out.sb: standard error of the slope (scalar)
-%   out.covab: covariance of the slope and intercept (scalar)
-%   out.df: degrees of freedom of the linear fit (n-2) (scalar)
-%   out.mswd: mean square of the residuals statistic (scalar)
+%   out.alpha: value of the eponymous input argument (unitless; scalar)
+%   out.a: intercept of the straight line fit (same as data.x; scalar)
+%   out.sa: standard error of the intercept (ditto; scalar)
+%   out.b: slope of the fit (ditto; scalar)
+%   out.sb: standard error of the slope (ditto; scalar)
+%   out.covab: covariance of the slope and intercept (unitless; scalar)
+%   out.df: degrees of freedom of the linear fit (n-2) (unitless; scalar)
+%   out.mswd: mean square of the residuals statistic (unitless; scalar)
 %   out.pvalue: p-value of a Chi-square value with df degrees of freedom
-%   (scalar) 
+%   (unitless; scalar) 
 
     % default values for data.covxy
     n=size(data.x,2); % the number of data
