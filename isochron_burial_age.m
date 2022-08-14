@@ -48,6 +48,14 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     disp('Running the program.')
     data_all=data;
 
+    fprintf('Estimated production rate ratio is %.2f.\n',init_Rinh);
+    fprintf('The average latitude and elevation in the source area are %.2f degrees and %d meters.\n',source_lat,source_elv);
+    fprintf('The latitude and elevation of the samples are %.2f degrees and %d meters.\n',measured_lat,measured_elv);
+    fprintf('The thickness and density of the overburdens upon the samples are %d cm and %.2f g/cm^3.\n',z,rho);
+    fprintf('The cutoff value for confidence intervals is %.2f.\n\n',alpha);
+    % simple burial dating
+    simple_burial_age(data,source_lat,source_elv,limit,init_Rinh);
+
     % mean life for 10Be, 26Al, and bur
     tau_10=2.001;   % Chmeleff et al., 2010; Korshchinek et al., 2010
     sigma_tau_10=0.017;
@@ -56,11 +64,10 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     tau_bur=1/(1/tau_26-1/tau_10);  % Granger, 2014, eq. 17
     sigma_tau_bur=sqrt((tau_10^2/(tau_10-tau_26)^2)^2*sigma_tau_26^2+(tau_26^2/(tau_10-tau_26)^2)^2*sigma_tau_10^2);
 
-    % production rate for 10Be and 26Al on the surface of the source area
-    [Pn,~,Pms,~,Pmf,~]=production_rate(source_lat,source_elv,0,rho,10);
-    P100=Pn+Pms+Pmf;
-    [Pn,~,Pms,~,Pmf,~]=production_rate(source_lat,source_elv,0,2.65,26);
-    P260=Pn+Pms+Pmf;
+    % production rate from spallation for 10Be and 26Al on the surface of the source area
+    P100=production_rate(source_lat,source_elv,0,rho,10);
+    P260=production_rate(source_lat,source_elv,0,2.65,26);
+    fprintf('\n');
     disp('Calculating the isochron burial age:');
     % preclude reworked samples
     option.flag=0;
