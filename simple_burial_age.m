@@ -1,8 +1,6 @@
-function [bur_age,upper_sigma_bur_age,lower_sigma_bur_age]=simple_burial_age(data,measured_lat,measured_elv)
+function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_burial_age(data,source_lat,source_elv,limit,init_Rinh)
 
-%% Calculate the simple burial age of each sample following the equation 22 in Granger, 2014.
-% Note that the formula of the burial age do not give an analytic solution
-% but an simple estimation. See "Granger, 2014" for more imformation.
+%% Calculate the simple burial age of each sample
 
 %% Arguments:
 % data must have fields as:
@@ -10,64 +8,77 @@ function [bur_age,upper_sigma_bur_age,lower_sigma_bur_age]=simple_burial_age(dat
 %   data.dx: 1 sigma absolute error of 10Be (atom/g; 1xn vector)
 %   data.y: measured 26Al concentration (atom/g; 1xn vector)
 %   data.dy: 1 sigma absolute error of 26Al (atom/g; 1xn vector)
-% measured_lat: mearsured latitude of the samples (degree; scalar)
-% measured_elv: mearsured elevation of the samples (m; scalar)
+% source_lat: average latitude in the source area (degree; scalar)
+% source_elv: average elevation in the source area (m; scalar)
 
 %% Output:
-% bur_age: isochron burial age (Myr; 1xn vector)
+% simple_bur_age: simple burial age (Myr; 1xn vector)
 % upper_sigma_bur_age: upper 1 simga absolute error of the burial age (Myr;
 % 1xn vector) 
 % lower_sigma_bur_age: lower 1 simga absolute error of the burial age (Myr;
 % 1xn vector) 
 
-    m=size(measured_lat,2);   % number of measured_lat
+    disp('Calculating the simple burial age:');
+    tau_10=2.001;   % Chmeleff et al., 2010; Korshchinek et al., 2010
+    sigma_tau_10=0.017;
+    tau_26=1.034;   % Samworth et al., 1972
+    sigma_tau_26=0.024;
+    tau_bur=1/(1/tau_26-1/tau_10);  % Granger, 2014, eq. 17
+    sigma_tau_bur=sqrt((tau_10^2/(tau_10-tau_26)^2)^2*sigma_tau_26^2+(tau_26^2/(tau_10-tau_26)^2)^2*sigma_tau_10^2);
+    
     % defines of the variables
     N10=data.x;
     sigma_N10=data.dx;
     N26=data.y;
     sigma_N26=data.dy;
-    % malloc
-    P100=zeros(1,m);
-    sigma_P100=P100;
-    P260=P100;
-    sigma_P260=P100;
-    for i=1:m
-        [Pn,sigma_Pn,Pms,sigma_Pms,Pmf,sigma_Pmf]=production_rate(measured_lat(i),measured_elv(i),0,2.65,10);
-        P100(i)=Pn+Pms+Pmf;
-        sigma_P100(i)=sigma_Pn+sigma_Pms+sigma_Pmf;
-        [Pn,sigma_Pn,Pms,sigma_Pms,Pmf,sigma_Pmf]=production_rate(measured_lat(i),measured_elv(i),0,2.65,26);
-        P260(i)=Pn+Pms+Pmf;
-        sigma_P260(i)=sigma_Pn+sigma_Pms+sigma_Pmf;
+    R=N26./N10;
+    P100=production_rate(source_lat,source_elv,0,2.65,10);
+    P260=production_rate(source_lat,source_elv,0,2.65,26);
+
+    n=size(N10,2);   % number of data
+    limit=ones(1,n)*limit;
+    count=0;
+    t=zeros(1,n);
+    old_t=zeros(1,n);
+    Rinh=ones(1,n)*init_Rinh;
+    for i=1:n
+        while true
+            t(i) = -tau_bur*log(R(i)/Rinh(i));
+            if count>0
+                if abs(old_t(i)-t(i))<limit
+                    break;
+                end
+                if count>=99
+                    disp('Error! No iterative solution found!');
+                    simple_bur_age=NaN;
+                    upper_sigma_bur_age=NaN;
+                    lower_sigma_bur_age=NaN;
+                    return;
+                end
+            end
+            Rinh(i)=P260/(P100+N10(i)*exp(t(i)/tau_10)/tau_bur/1E6);
+            count=count+1;
+            old_t(i)=t(i);
+        end
     end
 
-    % mean life for 10Be and 26Al
-    tau_10=2.001;   % Chmeleff et al., 2010; Korshchinek et al., 2010
-    sigma_tau_10=0.017;
-    tau_26=1.034;   % Samworth et al., 1972
-    sigma_tau_26=0.024;
-
-    % Monte-Carlo simulation for the 1 sigma error of the burial age
-    n=size(data.x,2);   % number of samples
+    simple_bur_age=t;
     cache=zeros(1E5,n); % malloc
-    % The errors of the mean life, measured concentrations, production rate
-    % at the local surface of the 10Be and 26Al are all taken into the
-    % error of the simple burial age.
     for i=1:1E5
-        rand_tau_10=normrnd(tau_10,sigma_tau_10);
-        rand_tau_26=normrnd(tau_26,sigma_tau_26);
         rand_N10=normrnd(N10,sigma_N10);
         rand_N26=normrnd(N26,sigma_N26);
-        rand_P100=normrnd(P100,sigma_P100);
-        rand_P260=normrnd(P260,sigma_P260);
-        rand_age=(rand_tau_10+1/(1/rand_tau_26-1/rand_tau_10))/2.*log(-0.5./rand_N10.*rand_P100.*(rand_tau_10*1E+06)+sqrt(0.25./(rand_N10.^2).*(rand_P100.^2).*((rand_tau_10*1E+06)^2)+2./rand_N26.*rand_P260.*(rand_tau_26*1E+06)));   % Granger, 2015, eq. 22
-        cache(i,:)=rand_age;
+        rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
+        rand_burial_age=-rand_tau_bur.*log(rand_N26./rand_N10./Rinh);
+        cache(i,:)=rand_burial_age;
     end
-    % malloc
-    bur_age=zeros(1,n);
     upper_sigma_bur_age=zeros(1,n);
     lower_sigma_bur_age=zeros(1,n);
     for i=1:n
         single=cache(:,i);
-        [bur_age(i),upper_sigma_bur_age(i),lower_sigma_bur_age(i)]=KDE(single);
+        [~,upper_sigma_bur_age(i),lower_sigma_bur_age(i)]=KDE(single);
+    end
+    fprintf('Index  |  measured 10Be (at/g)  |  1 sigma error (at/g)  |  measured 26Al (at/g)  |  1 sigma error (at/g)  |  Simple burial age (Myr)  |  Upper 1 sigma error (Myr)  |  Lower 1 sigma error (Myr)\n');
+    for i=1:n
+        fprintf('%5d  |  %20d  |  %20d  |  %20d  |  %20d  |  %23.3g  |  %+25.3g  |  %25.3g\n',i,N10(i),sigma_N10(i),N26(i),sigma_N26(i),simple_bur_age(i),upper_sigma_bur_age(i),lower_sigma_bur_age(i));
     end
 end
