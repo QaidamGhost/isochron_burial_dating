@@ -2,7 +2,7 @@ function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate
 
 %% Calculate 10Be or 26Al Production Rates on the surface or at a given depth from Spallation and Muons.
 % This script is modified after a MATLAB script "CNP.m" which was developed
-% by Chia-Yu Chen, Richard Ott, Erica Erlanger, Maarten Lupker and Yanyan
+% by Chia-Yu Chen, Richard Ott, Erica Erlanger, Maarten Lupker, and Yanyan
 % Wang (Lupker et al., 2012). For a surface production rate calculation,
 % just set the "z" to zero and "rho" to an arbitrary value.
 
