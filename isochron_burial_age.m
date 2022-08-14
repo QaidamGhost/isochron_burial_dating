@@ -308,6 +308,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             old_b=b;
             count=count+1;
         end
+        Rinh(n)=[]; % remove the post-burial's value from Rinh
         
         % Monte-Carlo simulation
         % If your final maximum burial age is unstable after several
@@ -340,5 +341,6 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
         fprintf('Maximum burial age is %f Myr, upper 1 sigma error is %f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
+        disp('------------------------------------------------------------------------------------------------------------------');
     end
 end
