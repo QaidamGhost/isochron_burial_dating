@@ -24,7 +24,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 ## Software Version and Dependency
  - Matlab 2021b or higher version.
  - Optimization Toolbox 9.2 or higher version.
- - Statistics or Machine Learning Toolbox 12.2 and higher version.
+ - Statistics or Machine Learning Toolbox 12.2 or higher version.
  - Curve Fitting Toolbox 3.6 or higher version.
 
 ## Platform for Tests
