@@ -1,4 +1,4 @@
-function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,z,rho,alpha)
+function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha)
 
 %% An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
 %  Note that the script will calculate minimum and maximum burial age if
@@ -31,6 +31,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 % source_elv: average elevation in the source area (m; scalar)
 % measured_lat: mearsured latitude of the samples (degree; scalar)
 % measured_elv: mearsured elevation of the samples (m; scalar)
+% shielding_factor: (unitless; scalar)
 % z: depth of samples (cm; scalar)
 % rho: density of the overburdens (g/cm^3; scalar)
 % alpha: cutoff value for confidence intervals (unitless; scalar)
@@ -65,8 +66,8 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     sigma_tau_bur=sqrt((tau_10^2/(tau_10-tau_26)^2)^2*sigma_tau_26^2+(tau_26^2/(tau_10-tau_26)^2)^2*sigma_tau_10^2);
 
     % production rate from spallation for 10Be and 26Al on the surface of the source area
-    P100=production_rate(source_lat,source_elv,0,rho,10);
-    P260=production_rate(source_lat,source_elv,0,2.65,26);
+    P100=production_rate(source_lat,source_elv,1,0,2.9,10);
+    P260=production_rate(source_lat,source_elv,1,0,2.9,26);
     fprintf('\n');
     disp('Calculating the isochron burial age:');
     % preclude reworked samples
@@ -231,7 +232,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         data=data_all;
         option.flag2=0;
         % the post-burial concentration
-        [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured_elv,z,rho,option);
+        [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured_elv,shielding_factor,z,rho,option);
         option.flag=2;
         option.Npb.x=N10pb;
         option.Npb.dx=sigma_N10pb;
