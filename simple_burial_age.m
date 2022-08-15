@@ -10,6 +10,9 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
 %   data.dy: 1 sigma absolute error of 26Al (atom/g; 1xn vector)
 % source_lat: average latitude in the source area (degree; scalar)
 % source_elv: average elevation in the source area (m; scalar)
+% limit: iteration stops if the variation of age reaches the given limit
+% (unitless; scalar)
+% init_Rinh: initial guess of Rinh (unitless; scalar)
 
 %% Output:
 % simple_bur_age: simple burial age (Myr; 1xn vector)
