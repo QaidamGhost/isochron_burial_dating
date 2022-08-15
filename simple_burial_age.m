@@ -32,8 +32,8 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
     N26=data.y;
     sigma_N26=data.dy;
     R=N26./N10;
-    P100=production_rate(source_lat,source_elv,0,2.65,10);
-    P260=production_rate(source_lat,source_elv,0,2.65,26);
+    P100=production_rate(source_lat,source_elv,1,0,2.9,10);
+    P260=production_rate(source_lat,source_elv,1,0,2.9,26);
 
     n=size(N10,2);   % number of data
     limit=ones(1,n)*limit;
