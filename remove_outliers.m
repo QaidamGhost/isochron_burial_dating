@@ -151,6 +151,9 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
                 data2.y(:,m)=[];
                 data2.dy(:,m)=[];
                 new_data=data2;
+                if out.mswd>1
+                    fprintf('Warning! MSWD is beyond "1".\n');
+                end
                 return;
             end
             
