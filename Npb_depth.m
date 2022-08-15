@@ -82,11 +82,11 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
         rand_P10ms_z=normrnd(P10ms_z,sigma_P10ms_z);
         rand_P10mf_z=normrnd(P10mf_z,sigma_P10mf_z);
         rand_tau_10=normrnd(tau_10,sigma_tau_10);
-        expo_age=expo_age_est(randi([1,n]));
+        rand_expo_age=expo_age_est(randi([1,n]));
 
-        rand_N10n_pb_max=rand_P10n_z/(1/rand_tau_10/1E+06-rho*e/Ln)*(exp(-rho*expo_age*1E+06*e/Ln)-exp(-expo_age/tau_10));
-        rand_N10ms_pb_max=rand_P10ms_z/(1/rand_tau_10/1E+06-rho*e/Lms)*(exp(-rho*expo_age*1E+06*e/Lms)-exp(-expo_age/tau_10));
-        rand_N10mf_pb_max=rand_P10mf_z/(1/rand_tau_10/1E+06-rho*e/Lmf)*(exp(-rho*expo_age*1E+06*e/Lmf)-exp(-expo_age/tau_10));
+        rand_N10n_pb_max=rand_P10n_z/(1/rand_tau_10/1E+06-rho*e/Ln)*(exp(-rho*rand_expo_age*1E+06*e/Ln)-exp(-rand_expo_age/tau_10));
+        rand_N10ms_pb_max=rand_P10ms_z/(1/rand_tau_10/1E+06-rho*e/Lms)*(exp(-rho*rand_expo_age*1E+06*e/Lms)-exp(-rand_expo_age/tau_10));
+        rand_N10mf_pb_max=rand_P10mf_z/(1/rand_tau_10/1E+06-rho*e/Lmf)*(exp(-rho*rand_expo_age*1E+06*e/Lmf)-exp(-rand_expo_age/tau_10));
         rand_N10pb=rand_N10n_pb_max+rand_N10ms_pb_max+rand_N10mf_pb_max;
         cache(i)=(rand_N10pb);
     end
@@ -105,14 +105,13 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
         rand_P26ms_z=normrnd(P26ms_z,sigma_P26ms_z);
         rand_P26mf_z=normrnd(P26mf_z,sigma_P26mf_z);
         rand_tau_26=normrnd(tau_26,sigma_tau_26);
-        expo_age=expo_age_est(randi([1,n]));
+        rand_expo_age=expo_age_est(randi([1,n]));
 
-        rand_N26n_pb_max=rand_P26n_z/(1/rand_tau_26/1E+06-rho*e/Ln)*(exp(-rho*expo_age*1E+06*e/Ln)-exp(-expo_age/tau_26));
-        rand_N26ms_pb_max=rand_P26ms_z/(1/rand_tau_26/1E+06-rho*e/Lms)*(exp(-rho*expo_age*1E+06*e/Lms)-exp(-expo_age/tau_26));
-        rand_N26mf_pb_max=rand_P26mf_z/(1/rand_tau_26/1E+06-rho*e/Lmf)*(exp(-rho*expo_age*1E+06*e/Lmf)-exp(-expo_age/tau_26));
+        rand_N26n_pb_max=rand_P26n_z/(1/rand_tau_26/1E+06-rho*e/Ln)*(exp(-rho*rand_expo_age*1E+06*e/Ln)-exp(-rand_expo_age/tau_26));
+        rand_N26ms_pb_max=rand_P26ms_z/(1/rand_tau_26/1E+06-rho*e/Lms)*(exp(-rho*rand_expo_age*1E+06*e/Lms)-exp(-rand_expo_age/tau_26));
+        rand_N26mf_pb_max=rand_P26mf_z/(1/rand_tau_26/1E+06-rho*e/Lmf)*(exp(-rho*rand_expo_age*1E+06*e/Lmf)-exp(-rand_expo_age/tau_26));
         rand_N26pb=rand_N26n_pb_max+rand_N26ms_pb_max+rand_N26mf_pb_max;
         cache(i)=(rand_N26pb);
     end
     sigma_N26pb=std(cache);
 end
-
