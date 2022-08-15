@@ -108,6 +108,9 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
                     fprintf('%d reworked clasts are removed.\n',count);
                 end
             end
+            if out.mswd>1
+                fprintf('Warning! MSWD is beyond "1".\n');
+            end
             return;
         end
         if (b*X(i)+a-Y(i)<=0) % the outlier is above the isochron line
@@ -133,7 +136,9 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
                     fprintf('%d reworked clasts are removed.\n',count);
                 end
             end
-            fprintf('Warning! MSWD is %f (beyond "1").\n', out.mswd);
+            if out.mswd>1
+                fprintf('Warning! MSWD is beyond "1".\n');
+            end
             return;
         end
         % protect the post-burial concentration data point 
