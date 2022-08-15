@@ -1,14 +1,15 @@
-function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate(measured_lat,measured_elv,z,rho,nuclide)
+function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate(measured_lat,measured_elv,shielding_factor,z,rho,nuclide)
 
 %% Calculate 10Be or 26Al Production Rates on the surface or at a given depth from Spallation and Muons.
 % This script is modified after a MATLAB script "CNP.m" which was developed
-% by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan
+% by Chia-Yu Chen, Richard Ott, Erica Erlanger, Maarten Lupker, and Yanyan
 % Wang (Lupker et al., 2012). For a surface production rate calculation,
 % just set the "z" to zero and "rho" to an arbitrary value.
 
 %% Arguments:
 % measured_lat: mearsured latitude of the sample (unitless; scalar)
 % measured_elv: mearsured elevation of the sample (m; scalar)
+% shielding_factor: (unitless; scalar)
 % z: measured depth of the sample (cm; scalar)
 % rho: density of the overburden (g/cm^3; scalar)
 % nuclide: value 10 for 10Be calculation and 26 for 26Al (unitless; scalar)
@@ -75,16 +76,16 @@ function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate
 
     %% Calculate 10Be or 26Al Production Rates on the surface from Spallation and Muons
     % 10Be or 26Al production from Spallation, assuming neutron attenuation length in air of 150 g/cm2
-    Pn= Pn_SLHL.*(A+B.*exp(-pres/150)+C.*pres+D.*pres.^2+E.*pres.^3); % Stone, 2000
-    sigma_Pn= sigma_Pn_SLHL.*(A+B.*exp(-pres/150)+C.*pres+D.*pres.^2+E.*pres.^3);
+    Pn= Pn_SLHL.*(A+B.*exp(-pres/150)+C.*pres+D.*pres.^2+E.*pres.^3)*shielding_factor; % Stone, 2000
+    sigma_Pn= sigma_Pn_SLHL.*(A+B.*exp(-pres/150)+C.*pres+D.*pres.^2+E.*pres.^3)*shielding_factor;
     % 10Be or 26Al production from Slow Muons, assuming (1) sea level pressure of 1013.25 mbar and 
     %(2) muon attentuation length in air of 260 g/cm2 (Braucher et al., 2011)
-    Pms=Pms_SLHL.*exp((1013.25-pres)/260); 
-    sigma_Pms= sigma_Pms_SLHL.*exp((1013.25-pres)/260); 
+    Pms=Pms_SLHL.*exp((1013.25-pres)/260)*shielding_factor; 
+    sigma_Pms= sigma_Pms_SLHL.*exp((1013.25-pres)/260)*shielding_factor; 
     % 10Be or 26Al production from Fast Muons, assuming (1) sea level pressure of 1013.25 mbar and 
     %(2) muon attentuation length in air of 510 g/cm2 (Braucher et al., 2011)
-    Pmf=Pmf_SLHL.*exp((1013.25-pres)/510); 
-    sigma_Pmf=sigma_Pmf_SLHL.*exp((1013.25-pres)/510); 
+    Pmf=Pmf_SLHL.*exp((1013.25-pres)/510)*shielding_factor; 
+    sigma_Pmf=sigma_Pmf_SLHL.*exp((1013.25-pres)/510)*shielding_factor; 
 
     %% Attenuation lengths of neutrons, slow muons, and fast muons, respectively. 
     % Unit: g/cm^2. Braucher et al., 2011.
