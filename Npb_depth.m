@@ -1,10 +1,11 @@
-function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured_elv,z,rho,option)
+function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured_elv,shielding_factor,z,rho,option)
 
 %% Calculate the maximum estimation of the post-burial concentrations with 1 sigma error at the sampling location and penetration depth if the maximum exposure age (and additional erosion rate) of the surface is constrained.
 %
 %% Arguments:
 % measured_lat: mearsured latitude of the samples (degree; scalar)
 % measured_elv: mearsured elevation of the samples (m; scalar)
+% shielding_factor: (unitless; scalar)
 % z: depth of the samples (cm; scalar)
 % rho: density of the overburdens (g/cm^3; scalar)
 % option have a field as:
@@ -62,8 +63,8 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
     tau_26=1.034;   % Samworth et al., 1972
     sigma_tau_26=0.024;
 
-    [P10n_z,sigma_P10n_z,P10ms_z,sigma_P10ms_z,P10mf_z,sigma_P10mf_z]=production_rate(measured_lat,measured_elv,z,rho,10);
-    [P26n_z,sigma_P26n_z,P26ms_z,sigma_P26ms_z,P26mf_z,sigma_P26mf_z]=production_rate(measured_lat,measured_elv,z,rho,26);
+    [P10n_z,sigma_P10n_z,P10ms_z,sigma_P10ms_z,P10mf_z,sigma_P10mf_z]=production_rate(measured_lat,measured_elv,shielding_factor,z,rho,10);
+    [P26n_z,sigma_P26n_z,P26ms_z,sigma_P26ms_z,P26mf_z,sigma_P26mf_z]=production_rate(measured_lat,measured_elv,shielding_factor,z,rho,26);
 
     Ln=160;
     Lms=1500;
