@@ -129,6 +129,8 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         count=count+1;
     end
     
+    fprintf('MSWD is %.3g.\n',out.mswd);
+
     % Monte-Carlo simulation
     iso_bur_age(1)=-tau_bur*log(b/mean(Rinh));
     cache=zeros(1,1E5);
@@ -207,6 +209,8 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             count=count+1;
         end
         
+        fprintf('MSWD is %.3g.\n',out.mswd);
+
         % Monte-Carlo simulation
         iso_bur_age(2)=-tau_bur*log(b/mean(Rinh));
         cache=zeros(1,1E5);
@@ -299,7 +303,9 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             count=count+1;
         end
         Rinh(n)=[]; % remove the post-burial's value from Rinh
-        
+
+        fprintf('MSWD is %.3g.\n',out.mswd);
+
         % Monte-Carlo simulation
         iso_bur_age(3)=-tau_bur*log(b/mean(Rinh));
         cache=zeros(1,1E5);
