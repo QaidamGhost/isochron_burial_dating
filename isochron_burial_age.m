@@ -130,6 +130,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     end
     
     % Monte-Carlo simulation
+    iso_bur_age(1)=-tau_bur*log(b/mean(Rinh));
     cache=zeros(1,1E5);
     for i=1:1E5
         rand_b=normrnd(b,sigma_b);
@@ -137,7 +138,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
         cache(i)=rand_bur_age;
     end
-    [iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache);
+    [~,upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache,iso_bur_age(1));
 
     plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
     fprintf('Burial age is %f Myr, upper 1 sigma error is %f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1));
@@ -207,33 +208,15 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         end
         
         % Monte-Carlo simulation
-        % If your final minimum burial age is unstable after several
-        % repeats, try to set a larger value for "num" so that the script
-        % will choose a median value from the simulations. However, this
-        % will take longer time to get the final result.
-        num=1;
-        for j=1:(2*num+1)
-	        cache=zeros(1,1E5);
-            for i=1:1E5
-                rand_b=normrnd(b,sigma_b);
-                rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
-                rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
-                cache(i)=rand_bur_age;
-            end
-            [most_prob,upper_sigma,lower_sigma]=KDE(cache);
-            rand.bur_age(j)=most_prob;
-            rand.upper_sigma_bur_age(j)=upper_sigma;
-            rand.lower_sigma_bur_age(j)=lower_sigma;
+        iso_bur_age(2)=-tau_bur*log(b/mean(Rinh));
+        cache=zeros(1,1E5);
+        for i=1:1E5
+            rand_b=normrnd(b,sigma_b);
+            rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
+            rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
+            cache(i)=rand_bur_age;
         end
-        m=median(rand.bur_age);
-        for j=1:(2*num+1)
-            if rand.bur_age(j)==m
-                break;
-            end
-        end
-        iso_bur_age(2)=m;
-        upper_sigma_bur_age(2)=rand.upper_sigma_bur_age(j);
-        lower_sigma_bur_age(2)=rand.lower_sigma_bur_age(j);
+        [~,upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache,iso_bur_age(2));
         
         %
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
@@ -318,33 +301,15 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         Rinh(n)=[]; % remove the post-burial's value from Rinh
         
         % Monte-Carlo simulation
-        % If your final maximum burial age is unstable after several
-        % repeats, try to set a larger value for "num" so that the script
-        % will choose a median value from the simulations. However, this
-        % will take longer time to get the final result.
-        num=5;
-        for j=1:(2*num+1)
-            cache=zeros(1,1E5);
-            for i=1:1E5
-                rand_b=normrnd(b,sigma_b);
-                rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
-                rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
-                cache(i)=rand_bur_age;
-            end
-            [most_prob,upper_sigma,lower_sigma]=KDE(cache);
-            rand.bur_age(j)=most_prob;
-            rand.upper_sigma_bur_age(j)=upper_sigma;
-            rand.lower_sigma_bur_age(j)=lower_sigma;
+        iso_bur_age(3)=-tau_bur*log(b/mean(Rinh));
+        cache=zeros(1,1E5);
+        for i=1:1E5
+            rand_b=normrnd(b,sigma_b);
+            rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
+            rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
+            cache(i)=rand_bur_age;
         end
-        m=median(rand.bur_age);
-        for j=1:(2*num+1)
-            if rand.bur_age(j)==m
-                break;
-            end
-        end
-        iso_bur_age(3)=m;
-        upper_sigma_bur_age(3)=rand.upper_sigma_bur_age(j);
-        lower_sigma_bur_age(3)=rand.lower_sigma_bur_age(j);
+        [~,upper_sigma_bur_age(3),lower_sigma_bur_age(3)]=KDE(cache,iso_bur_age(3));
 
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
         fprintf('Maximum burial age is %f Myr, upper 1 sigma error is %f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
