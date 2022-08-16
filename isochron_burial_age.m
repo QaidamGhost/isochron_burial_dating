@@ -52,6 +52,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     fprintf('Estimated production rate ratio is %.2f.\n',init_Rinh);
     fprintf('The average latitude and elevation in the source area are %.2f degrees and %d meters.\n',source_lat,source_elv);
     fprintf('The latitude and elevation of the samples are %.2f degrees and %d meters.\n',measured_lat,measured_elv);
+    fprintf('The shielding factor is %.5f.\n',shielding_factor);
     fprintf('The thickness and density of the overburdens upon the samples are %d cm and %.2f g/cm^3.\n',z,rho);
     fprintf('The cutoff value for confidence intervals is %.2f.\n\n',alpha);
     % simple burial dating
@@ -131,6 +132,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     end
     
     fprintf('MSWD is %.3g.\n',out.mswd);
+    fprintf('Post-burial concentration of 10Be is %d with 1 sigma error ±%f.\n',out.a,out.sa);
 
     % Monte-Carlo simulation
     iso_bur_age(1)=-tau_bur*log(b/mean(Rinh));
@@ -144,7 +146,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     [~,upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache,iso_bur_age(1));
 
     plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
-    fprintf('Burial age is %f Myr, upper 1 sigma error is %f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1));
+    fprintf('Burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1));
 
     if out.a<0    % intercept less than zero -> use max and min estimation
         fprintf('\n');
@@ -211,6 +213,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         end
         
         fprintf('MSWD is %.3g.\n',out.mswd);
+        fprintf('Post-burial concentration of 10Be is zero.\n');
 
         % Monte-Carlo simulation
         iso_bur_age(2)=-tau_bur*log(b/mean(Rinh));
@@ -225,7 +228,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         
         %
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
-        fprintf('Minimum burial age is %f Myr, upper 1 sigma error is %f Myr, and lower 1 sigma error is %f Myr.\n\n',iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2));
+        fprintf('Minimum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n\n',iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2));
         
         %% max estimation: insert the post-burial concentration as a datum
         disp('Calculating the maximum burial age:');
@@ -306,6 +309,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         Rinh(n)=[]; % remove the post-burial's value from Rinh
 
         fprintf('MSWD is %.3g.\n',out.mswd);
+        fprintf('Post-burial concentration of 10Be is %d with 1 sigma error ±%d.\n',out.a,out.sa);
 
         % Monte-Carlo simulation
         iso_bur_age(3)=-tau_bur*log(b/mean(Rinh));
@@ -319,7 +323,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         [~,upper_sigma_bur_age(3),lower_sigma_bur_age(3)]=KDE(cache,iso_bur_age(3));
 
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
-        fprintf('Maximum burial age is %f Myr, upper 1 sigma error is %f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
-        disp('------------------------------------------------------------------------------------------------------------------');
+        fprintf('Maximum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
     end
+    disp('------------------------------------------------------------------------------------------------------------------');
 end
