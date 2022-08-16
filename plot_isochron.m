@@ -55,9 +55,9 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,ini
     % isochron line
     Y1 = b*X+a;
     % upper error line
-    Y2 = (b+sigma_b)*X+a-sigma_a;
+    Y2 = (b+sigma_b)*X+a+sigma_a;
     % lower error line
-    Y3 = (b-sigma_b)*X+a+sigma_a;
+    Y3 = (b-sigma_b)*X+a-sigma_a;
     % production ratio line
     Y4 = init_Rinh*X;
     if option.flag==0
