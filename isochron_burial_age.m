@@ -59,7 +59,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     simple_burial_age(data,source_lat,source_elv,limit,init_Rinh);
 
     % mean life for 10Be, 26Al, and bur
-    tau_10=2.001;   % Chmeleff et al., 2010; Korshchinek et al., 2010
+    tau_10=2.001;   % Chmeleff et al., 2010; Korschinek et al., 2010
     sigma_tau_10=0.017;
     tau_26=1.034;   % Samworth et al., 1972
     sigma_tau_26=0.024;
