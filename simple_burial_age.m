@@ -22,7 +22,7 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
 % 1xn vector) 
 
     disp('Calculating the simple burial age:');
-    tau_10=2.001;   % Chmeleff et al., 2010; Korshchinek et al., 2010
+    tau_10=2.001;   % Chmeleff et al., 2010; Korschinek et al., 2010
     sigma_tau_10=0.017;
     tau_26=1.034;   % Samworth et al., 1972
     sigma_tau_26=0.024;
