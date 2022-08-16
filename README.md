@@ -18,7 +18,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 ## Instruction
  1. Define the variables, which are the arguments in "isochron_burial_dating.m", with your values.
  2. Create a file "expo_age.mat" (and an optional "e.mat") in the folder where the .m-files are. See the instruction of these two files in "Npb_depth.m" for the creation.
- 3. Run "isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,z,rho,alpha);" in the command window.
+ 3. Run "isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha);" in the command window.
  4. Wait for the plots and values of burial age in the command window.
 
 ## Software Version and Dependency
