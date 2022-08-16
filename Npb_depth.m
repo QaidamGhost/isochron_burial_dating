@@ -58,7 +58,7 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
     n=tmp(1);
 
     % mean life for 10Be, 26Al, and bur
-    tau_10=2.001;   % Chmeleff et al., 2010; Korshchinek et al., 2010
+    tau_10=2.001;   % Chmeleff et al., 2010; Korschinek et al., 2010
     sigma_tau_10=0.017;
     tau_26=1.034;   % Samworth et al., 1972
     sigma_tau_26=0.024;
