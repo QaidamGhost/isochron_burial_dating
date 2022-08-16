@@ -148,6 +148,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         cache(i)=rand_bur_age;
     end
     [~,upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache,iso_bur_age(1));
+    %[iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache);
 
     plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
     fprintf('Burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1));
@@ -233,6 +234,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             cache(i)=rand_bur_age;
         end
         [~,upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache,iso_bur_age(2));
+        %[iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache);
         
         %
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
@@ -290,7 +292,8 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             % 2010, eq. 12
             bur_age=-tau_bur*log(b./Rinh);
             % calculate the post burial production of 10Be
-            C10=a/(P260/P100-b);
+            % C10 is determined directly by post-burial 10Be concentration
+            C10=data.x(n);
             % calculate the inherited concentration of 10Be for each sample
             N10inh=(data.x-C10).*exp(bur_age./tau_10);
             % calculate the inheritance ratio of 26Al/10Be for each sample
@@ -333,6 +336,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             cache(i)=rand_bur_age;
         end
         [~,upper_sigma_bur_age(3),lower_sigma_bur_age(3)]=KDE(cache,iso_bur_age(3));
+        %[iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3)]=KDE(cache);
 
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
         fprintf('Maximum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
