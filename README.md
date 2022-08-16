@@ -22,24 +22,30 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
  4. Wait for the plots and values of burial age in the command window.
 
 ## Software Version and Dependency
- - Matlab 2021b or higher version.
+ - Matlab 2021b or higher version (Recommend).
  - Optimization Toolbox 9.2 or higher version.
  - Statistics or Machine Learning Toolbox 12.2 or higher version.
  - Curve Fitting Toolbox 3.6 or higher version.
 
-## Platform for Tests
+## Platforms for Tests
  - Intel i9-9900K / HP OMEN by HP Obelisk Desktop 875-1xxx / Windows 10 21H2
  - AMD RYZEN R5-3600x / MSI B450m MORTAR / Windows 10 21H2
 
 ## References
  - Balco, Greg, and Charles W. Rovey. "An isochron method for cosmogenic-nuclide dating of buried soils and sediments." American Journal of Science 308.10 (2008): 1083-1114.
+ - Braucher, R., et al. "Production of cosmogenic radionuclides at great depth: A multi element approach." Earth and Planetary Science Letters 309.1-2 (2011): 1-9.
+ - Chmeleff, Jérôme, et al. "Determination of the 10Be half-life by multicollector ICP-MS and liquid scintillation counting." Nuclear Instruments and Methods in Physics Research Section B: Beam Interactions with Materials and Atoms 268.2 (2010): 192-199.
  - Erlanger, Erica D. "Rock uplift, erosion, and tectonic uplift of South Africa determined with cosmogenic aluminum-26 and beryllium-10." Ph. D. Thesis (2010).
  - Erlanger, Erica D., Darryl E. Granger, and Ryan J. Gibbon. "Rock uplift rates in South Africa from isochron burial dating of fluvial and marine terraces." Geology 40.11 (2012): 1019-1022.
  - Gibbon, Ryan J., et al. "Early Acheulean technology in the Rietputs Formation, South Africa, dated with cosmogenic nuclides." Journal of Human Evolution 56.2 (2009): 152-160.
+ - Granger, Darryl E., and Paul F. Muzikar. "Dating sediment burial with in situ-produced cosmogenic nuclides: theory, techniques, and limitations." Earth and Planetary Science Letters 188.1-2 (2001): 269-281.
  - Granger, D. E. "Cosmogenic nuclide burial dating in archaeology and paleoanthropology." (2014): 81-97.
  - Hidy, Alan J., et al. "A geologically constrained Monte Carlo approach to modeling exposure ages from profiles of cosmogenic nuclides: An example from Lees Ferry, Arizona." Geochemistry, Geophysics, Geosystems 11.9 (2010).
+ - Korschinek, Gunther, et al. "A new value for the half-life of 10Be by heavy-ion elastic recoil detection and liquid scintillation counting." Nuclear Instruments and Methods in Physics Research Section B: Beam Interactions with Materials and Atoms 268.2 (2010): 187-191.
  - Lupker, Maarten, et al. "10Be-derived Himalayan denudation rates and sediment budgets in the Ganga basin." Earth and Planetary Science Letters 333 (2012): 146-156.
  - Mahon, Keith I. "The New “York” regression: Application of an improved statistical method to geochemistry." International Geology Review 38.4 (1996): 293-303.
+ - Samworth, E. A., E. K. Warburton, and G. A. P. Engelbertink. "Beta Decay of the Al 26 Ground State." Physical Review C 5.1 (1972): 138.
+ - Stone, John O. "Air pressure and cosmogenic isotope production." Journal of Geophysical Research: Solid Earth 105.B10 (2000): 23753-23759.
  - Titterington, D. Michael, and Alex N. Halliday. "On the fitting of parallel isochrons and the method of maximum likelihood." Chemical Geology 26.3-4 (1979): 183-195.
  - Vermeesch, Pieter. "IsoplotR: A free and open toolbox for geochronology." Geoscience Frontiers 9.5 (2018): 1479-1493.
  - William III, E. Odom. Dating the Cenozoic incision history of the Tennessee and Shenandoah Rivers with cosmogenic nuclides and 40Ar/39Ar in manganese oxides. Diss. Purdue University Graduate School, 2020.
