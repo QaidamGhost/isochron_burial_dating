@@ -132,13 +132,17 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     end
     
     fprintf('MSWD is %.3g.\n',out.mswd);
-    fprintf('Post-burial concentration of 10Be is %d with 1 sigma error ±%f.\n',out.a,out.sa);
 
     % Monte-Carlo simulation
     iso_bur_age(1)=-tau_bur*log(b/mean(Rinh));
     cache=zeros(1,1E5);
     for i=1:1E5
-        rand_b=normrnd(b,sigma_b);
+        while true
+            rand_b=normrnd(b,sigma_b);
+            if rand_b>0
+                break;
+            end
+        end
         rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
         rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
         cache(i)=rand_bur_age;
@@ -213,13 +217,17 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         end
         
         fprintf('MSWD is %.3g.\n',out.mswd);
-        fprintf('Post-burial concentration of 10Be is zero.\n');
 
         % Monte-Carlo simulation
         iso_bur_age(2)=-tau_bur*log(b/mean(Rinh));
         cache=zeros(1,1E5);
         for i=1:1E5
-            rand_b=normrnd(b,sigma_b);
+            while true
+                rand_b=normrnd(b,sigma_b);
+                if rand_b>0
+                    break;
+                end
+            end
             rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
             rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
             cache(i)=rand_bur_age;
@@ -309,13 +317,17 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         Rinh(n)=[]; % remove the post-burial's value from Rinh
 
         fprintf('MSWD is %.3g.\n',out.mswd);
-        fprintf('Post-burial concentration of 10Be is %d with 1 sigma error ±%d.\n',out.a,out.sa);
 
         % Monte-Carlo simulation
         iso_bur_age(3)=-tau_bur*log(b/mean(Rinh));
         cache=zeros(1,1E5);
         for i=1:1E5
-            rand_b=normrnd(b,sigma_b);
+            while true
+                rand_b=normrnd(b,sigma_b);
+                if rand_b>0
+                    break;
+                end
+            end
             rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
             rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
             cache(i)=rand_bur_age;
