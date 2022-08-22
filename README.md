@@ -16,7 +16,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
  - york_fixed_intercept: A "york fit with a fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
 
 ## Instruction
- 0. The scripts assume the ratio of surface production rates as 6.61 which is indicated by the adopted mean life of 10Be and 26Al. Try to modify the production rates and mean life in the codes if you want to switch to a different value of the ratio, or the results will show some inaccuracy.
+ 0. The scripts assume the ratio of surface production rates as **6.61** which is indicated by the adopted mean life of 10Be and 26Al. **Try to modify the production rates and mean life in the codes if you want to switch to a different value of that ratio, or the results will show some inaccuracy.**
  1. Define the variables, which are the arguments in "isochron_burial_dating.m", with your values.
  2. Create a file "expo_age.mat" (and an optional "e.mat") in the folder where the .m-files are. See the instruction of these two files in "Npb_depth.m" for the creation.
  3. Run "isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha);" in the command window.
