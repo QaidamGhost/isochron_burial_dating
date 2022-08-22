@@ -37,6 +37,7 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
     R=N26./N10;
     P100=production_rate(source_lat,source_elv,1,0,2.9,10);
     P260=production_rate(source_lat,source_elv,1,0,2.9,26);
+    % P260=6.75*P100;
 
     n=size(N10,2);   % number of data
     limit=ones(1,n)*limit;
@@ -46,7 +47,7 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
     Rinh=ones(1,n)*init_Rinh;
     for i=1:n
         while true
-            t(i) = -tau_bur*log(R(i)/Rinh(i));
+            t(i) = -tau_bur*log(R(i)/Rinh(i));  % Granger and Muzikar, 2001
             if count>0
                 if abs(old_t(i)-t(i))<limit
                     break;
@@ -59,7 +60,8 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
                     return;
                 end
             end
-            Rinh(i)=P260/(P100+N10(i)*exp(t(i)/tau_10)/tau_bur/1E6);
+            Rinh(i)=P260/(P100+N10(i)*exp(t(i)/tau_10)/tau_bur/1E6);    % Erlanger, 2010
+            R(i)=N26(i)/N10(i)/Rinh(i)*(P260/P100); % Erlanger, 2010
             count=count+1;
             old_t(i)=t(i);
         end
@@ -68,10 +70,21 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
     simple_bur_age=t;
     cache=zeros(1E5,n); % malloc
     for i=1:1E5
-        rand_N10=normrnd(N10,sigma_N10);
-        rand_N26=normrnd(N26,sigma_N26);
+        while true
+            rand_N10=normrnd(N10,sigma_N10);
+            rand_N26=normrnd(N26,sigma_N26);
+            tmp=max((rand_N26./rand_N10./Rinh)-1);
+            if tmp(1)<0
+                break;
+            end
+        end
         rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
         rand_burial_age=-rand_tau_bur.*log(rand_N26./rand_N10./Rinh);
+        % Sometimes some random burial ages are complex number but with
+        % zero imaginary part which are illegal during following KDE. I
+        % don't know the reason of it, so I just pick up the real part of
+        % the numbers.
+        rand_burial_age=real(rand_burial_age);
         cache(i,:)=rand_burial_age;
     end
     upper_sigma_bur_age=zeros(1,n);
