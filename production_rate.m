@@ -32,7 +32,7 @@ function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate
         return;
     end
 
-    %% Scaling Equation Constants by Latitude (Stone,2000)
+    %% Scaling Equation Constants by Latitude (Stone,2000 after Lal, 1991)
     load consts.mat Lat a b c d e m;
     % Interpolation
     A = interp1(Lat,a,measured_lat);
