@@ -33,13 +33,7 @@ function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate
     end
 
     %% Scaling Equation Constants by Latitude (Stone,2000)
-    Lat = [0,10,20,30,40,50,60,90];
-    a = [31.8518,34.3699,40.3153,42.0983,56.7733,69.0720,71.8733,71.8733];
-    b = [250.3193,258.4759,308.9894,512.6857,649.1343,832.4566,863.1927,863.1927];
-    c = [-0.083393,-0.089807,-0.106248,-0.120551,-0.160859,-0.199252,-0.207069,-0.207069];
-    d = [7.4260e-5,7.9457e-5,9.4508e-5, 1.1752e-4,1.5463e-4,1.9391e-4,2.0127e-4,2.0127e-4];
-    e = [-2.2397e-8,-2.3697e-8,-2.8234e-8,-3.8809e-8,-5.0330e-8,-6.3653e-8,-6.6043e-8,-6.6043e-8];
-    m = [0.587,0.600,0.678,0.833,0.933,1.000,1.000,1.000];
+    load consts.mat Lat a b c d e m;
     % Interpolation
     A = interp1(Lat,a,measured_lat);
     B = interp1(Lat,b,measured_lat);
@@ -52,26 +46,27 @@ function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate
     pres=1013.25*exp(((-0.03417)/6.5e-3)*(log(288.15)-log(288.15-(6.5e-3*measured_elv)))); 
 
     %% Some values for 10Be and 26Al production rates at SLHL in Braucher et al., 2011
+    load consts.mat Pn10_SLHL sigma_Pn10_SLHL Pms10_SLHL sigma_Pms10_SLHL Pmf10_SLHL sigma_Pmf10_SLHL Pn26_SLHL sigma_Pn26_SLHL Pms26_SLHL sigma_Pms26_SLHL Pmf26_SLHL sigma_Pmf26_SLHL;
     if nuclide==10
         % Spallation-induced Production Rate of 10Be (at/g/yr) assuming 'St" scaling framework (Braucher et al., 2011)
-        Pn_SLHL = 4.49; 
-        sigma_Pn_SLHL = 0.30;
+        Pn_SLHL = Pn10_SLHL; 
+        sigma_Pn_SLHL = sigma_Pn10_SLHL;
         % Slow Muon-induced Production Rate of 10Be (at/g/yr) scaled to sea level (Braucher et al., 2011)
-        Pms_SLHL = 0.012; 
-        sigma_Pms_SLHL = 0.012;
+        Pms_SLHL = Pms10_SLHL; 
+        sigma_Pms_SLHL = sigma_Pms10_SLHL;
         % Fast Muon-induced Production Rate of 10Be (at/g/yr) scaled to sea level (Braucher et al., 2011)
-        Pmf_SLHL = 0.039; 
-        sigma_Pmf_SLHL=0.004;
+        Pmf_SLHL = Pmf10_SLHL; 
+        sigma_Pmf_SLHL=sigma_Pmf10_SLHL;
     elseif nuclide==26
         % Spallation-induced Production Rate of 26Al (at/g/yr) assuming 'St" scaling framework (Braucher et al., 2011)
-        Pn_SLHL = 29.68; 
-        sigma_Pn_SLHL = 1.98; 
+        Pn_SLHL = Pn26_SLHL; 
+        sigma_Pn_SLHL = sigma_Pn26_SLHL; 
         % Slow Muon-induced Production Rate of 26Al (at/g/yr) scaled to sea level (Braucher et al., 2011)
-        Pms_SLHL = 0.84; 
-        sigma_Pms_SLHL = 0.17; 
+        Pms_SLHL = Pms26_SLHL; 
+        sigma_Pms_SLHL = sigma_Pms26_SLHL; 
         % Fast Muon-induced Production Rate of 26Al (at/g/yr) scaled to sea level (Braucher et al., 2011)
-        Pmf_SLHL = 0.081; 
-        sigma_Pmf_SLHL=0.051;
+        Pmf_SLHL = Pmf26_SLHL; 
+        sigma_Pmf_SLHL=sigma_Pmf26_SLHL;
     end
 
     %% Calculate 10Be or 26Al Production Rates on the surface from Spallation and Muons
@@ -89,9 +84,7 @@ function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate
 
     %% Attenuation lengths of neutrons, slow muons, and fast muons, respectively. 
     % Unit: g/cm^2. Braucher et al., 2011.
-    Ln=160;
-    Lms=1500;
-    Lmf=4320;
+    load consts.mat Ln Lms Lmf;
     
     %% Calculate 10Be or 26Al Production Rates at a given depth from Spallation and Muons
     Pn_z= Pn*exp(-z*rho/Ln);
