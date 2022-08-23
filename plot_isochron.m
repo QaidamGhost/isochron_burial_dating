@@ -1,5 +1,4 @@
 function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,init_Rinh,option)
-%function plot_isochron(a,b,sigma_b,linearized_data,data,removed_data,init_Rinh)
 
 %% Plot the isochron line, production ratio line, and errorbars of samples and maximum estimation of post-burial concentration
 
