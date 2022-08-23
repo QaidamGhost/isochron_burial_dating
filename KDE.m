@@ -17,7 +17,7 @@ function [most_prob,upper_sigma,lower_sigma] = KDE(cache,cache_mean)
         cache_mean=NaN; 
     end
 
-    step=1E-4;
+    load consts.mat step;
     min_cache=min(cache);
     max_cache=max(cache);
     bounded_cache=min_cache:step:max_cache;
