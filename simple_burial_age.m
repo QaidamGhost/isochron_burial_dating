@@ -1,4 +1,4 @@
-function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_burial_age(data,source_lat,source_elv,limit,init_Rinh)
+function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_burial_age(data,source_lat,source_elv,init_Rinh)
 
 %% Calculate the simple burial age of each sample
 
@@ -10,7 +10,6 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
 %   data.dy: 1 sigma absolute error of 26Al (atom/g; 1xn vector)
 % source_lat: average latitude in the source area (degree; scalar)
 % source_elv: average elevation in the source area (m; scalar)
-% limit: iteration stops if the variation of age reaches the given limit
 % (unitless; scalar)
 % init_Rinh: initial guess of Rinh (unitless; scalar)
 
@@ -22,12 +21,11 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
 % 1xn vector) 
 
     disp('Calculating the simple burial age:');
-    tau_10=2.001;   % Chmeleff et al., 2010; Korschinek et al., 2010
-    sigma_tau_10=0.017;
-    tau_26=1.034;   % Samworth et al., 1972
-    sigma_tau_26=0.024;
-    tau_bur=1/(1/tau_26-1/tau_10);  % Granger, 2014, eq. 17
-    sigma_tau_bur=sqrt((tau_10^2/(tau_10-tau_26)^2)^2*sigma_tau_26^2+(tau_26^2/(tau_10-tau_26)^2)^2*sigma_tau_10^2);
+    % mean life for 10Be, 26Al, and bur
+    % 10Be: Chmeleff et al., 2010; Korschinek et al., 2010
+    % 26Al: Samworth et al., 1972
+    % tau_bur: Granger, 2014, eq. 17
+    load consts.mat tau_10 tau_bur sigma_tau_bur;
     
     % defines of the variables
     N10=data.x;
@@ -40,6 +38,7 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
     % P260=6.75*P100;
 
     n=size(N10,2);   % number of data
+    load consts.mat limit;
     limit=ones(1,n)*limit;
     count=0;
     t=zeros(1,n);
@@ -68,8 +67,9 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
     end
 
     simple_bur_age=t;
-    cache=zeros(1E5,n); % malloc
-    for i=1:1E5
+    load consts.mat simulation_times;
+    cache=zeros(simulation_times,n); % malloc
+    for i=1:simulation_times
         while true
             rand_N10=normrnd(N10,sigma_N10);
             rand_N26=normrnd(N26,sigma_N26);
