@@ -2,9 +2,11 @@
 
 **June 10, 2022**
 
-The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018, the "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication), and the "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .m-files in this directory.**
+The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018, the "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication), and the "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in this directory.**
 
-## List of .m-files
+## List of .mat and .m-files
+ - consts.mat: constants for calculation, including Stone's scaling parameters, mean life of 10Be and 26Al, step for KDE, simalation times, SLHL production rates, limit for iterations, and attenuation lengths of nuclide and muons.
+ - custom_mat_files: Generate custom "e.mat" and "expo_age.mat" before maximum estimation if erosion rates and exposure age have already been known.
  - isochron_burial_age: An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
  - KDE: Find the most probable value and 1 sigma absolute error for the observed simulations of an random variable after establishing the probability density function by a "nonparametric estimation" approach knows as kernel density estimation (KDE).
  - Npb_depth: Calculate the maximum estimation of the post-burial concentrations with 1 sigma error at the sampling location and penetration depth if the maximum exposure age (and additional erosion rate) of the surface is constrained.
@@ -43,6 +45,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
  - Granger, D. E. "Cosmogenic nuclide burial dating in archaeology and paleoanthropology." (2014): 81-97.
  - Hidy, Alan J., et al. "A geologically constrained Monte Carlo approach to modeling exposure ages from profiles of cosmogenic nuclides: An example from Lees Ferry, Arizona." Geochemistry, Geophysics, Geosystems 11.9 (2010).
  - Korschinek, Gunther, et al. "A new value for the half-life of 10Be by heavy-ion elastic recoil detection and liquid scintillation counting." Nuclear Instruments and Methods in Physics Research Section B: Beam Interactions with Materials and Atoms 268.2 (2010): 187-191.
+ - Lal, Devendra. "Cosmic ray labeling of erosion surfaces: in situ nuclide production rates and erosion models." Earth and Planetary Science Letters 104.2-4 (1991): 424-439.
  - Lupker, Maarten, et al. "10Be-derived Himalayan denudation rates and sediment budgets in the Ganga basin." Earth and Planetary Science Letters 333 (2012): 146-156.
  - Mahon, Keith I. "The New “York” regression: Application of an improved statistical method to geochemistry." International Geology Review 38.4 (1996): 293-303.
  - Samworth, E. A., E. K. Warburton, and G. A. P. Engelbertink. "Beta Decay of the Al 26 Ground State." Physical Review C 5.1 (1972): 138.
