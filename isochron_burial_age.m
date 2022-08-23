@@ -1,8 +1,8 @@
-function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha)
+function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha)
 
 %% An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
 %  Note that the script will calculate minimum and maximum burial age if
-%  the intercept of the original isochron line is below zero. 
+%  the intercept of the original isochron line is below zero.
 %  A. The minimum estimation ignores the post-burial production in the
 %  samples and calculates the burial age which is similar to simple burial
 %  dating.
@@ -25,8 +25,6 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 %   data.y: measured 26Al concentration (atom/g; 1xn vector)
 %   data.dy: 1 sigma absolute error of 26Al (atom/g; 1xn vector)
 % init_Rinh: initial guess of Rinh (unitless; scalar)
-% limit: iteration stops if the variation of slope reaches the given limit
-% (unitless; scalar)
 % source_lat: average latitude in the source area (degree; scalar)
 % source_elv: average elevation in the source area (m; scalar)
 % measured_lat: mearsured latitude of the samples (degree; scalar)
@@ -56,15 +54,15 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     fprintf('The thickness and density of the overburdens upon the samples are %d cm and %.2f g/cm^3.\n',z,rho);
     fprintf('The cutoff value for confidence intervals is %.2f.\n\n',alpha);
     % simple burial dating
-    simple_burial_age(data,source_lat,source_elv,limit,init_Rinh);
+    simple_burial_age(data,source_lat,source_elv,init_Rinh);
 
+    
     % mean life for 10Be, 26Al, and bur
-    tau_10=2.001;   % Chmeleff et al., 2010; Korschinek et al., 2010
-    sigma_tau_10=0.017;
-    tau_26=1.034;   % Samworth et al., 1972
-    sigma_tau_26=0.024;
-    tau_bur=1/(1/tau_26-1/tau_10);  % Granger, 2014, eq. 17
-    sigma_tau_bur=sqrt((tau_10^2/(tau_10-tau_26)^2)^2*sigma_tau_26^2+(tau_26^2/(tau_10-tau_26)^2)^2*sigma_tau_10^2);
+    % 10Be: Chmeleff et al., 2010; Korschinek et al., 2010
+    % 26Al: Samworth et al., 1972
+    % tau_bur: Granger, 2014, eq. 17
+    load consts.mat tau_10 tau_bur sigma_tau_bur;
+    load consts.mat limit simulation_times;
 
     % production rate from spallation for 10Be and 26Al on the surface of the source area
     P100=production_rate(source_lat,source_elv,1,0,2.9,10);
@@ -135,8 +133,8 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
     % Monte-Carlo simulation
     iso_bur_age(1)=-tau_bur*log(b/mean(Rinh));
-    cache=zeros(1,1E5);
-    for i=1:1E5
+    cache=zeros(1,simulation_times);
+    for i=1:simulation_times
         while true
             rand_b=normrnd(b,sigma_b);
             if rand_b>0
@@ -221,8 +219,8 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
         % Monte-Carlo simulation
         iso_bur_age(2)=-tau_bur*log(b/mean(Rinh));
-        cache=zeros(1,1E5);
-        for i=1:1E5
+        cache=zeros(1,simulation_times);
+        for i=1:simulation_times
             while true
                 rand_b=normrnd(b,sigma_b);
                 if rand_b>0
@@ -236,7 +234,6 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         [~,upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache,iso_bur_age(2));
         %[iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache);
         
-        %
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
         fprintf('Minimum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n\n',iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2));
         
@@ -323,8 +320,8 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
         % Monte-Carlo simulation
         iso_bur_age(3)=-tau_bur*log(b/mean(Rinh));
-        cache=zeros(1,1E5);
-        for i=1:1E5
+        cache=zeros(1,simulation_times);
+        for i=1:simulation_times
             while true
                 rand_b=normrnd(b,sigma_b);
                 if rand_b>0
