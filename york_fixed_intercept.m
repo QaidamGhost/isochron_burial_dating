@@ -2,8 +2,7 @@ function out=york_fixed_intercept(data,alpha,afx)
 
 %% A "york fit a with fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
 % This script is similiar to york.m but with a fixed intercept, modified after
-% a R script written by Pieter Vermeesch (personal communication). It's a
-% inelegant but quick solution to determine the line.
+% a R script written by Pieter Vermeesch (personal communication).
 
 %% Arguments:
 % data must have fields (similar to the scripts in Balco and Rovey, 2008):
