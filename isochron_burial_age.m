@@ -1,4 +1,4 @@
-function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha)
+function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha,option)
 
 %% An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
 %  Note that the script will calculate minimum and maximum burial age if
@@ -33,6 +33,10 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 % z: depth of samples (cm; scalar)
 % rho: density of the overburdens (g/cm^3; scalar)
 % alpha: cutoff value for confidence intervals (unitless; scalar)
+% option2: "1" for loading e.mat and "0" for using default value zero for
+% erosion rate for a "constant exposure" situation during the maximum
+% estimation when the first iterated isochron line's intercept is less than
+% zero (unitless; scalar)
 
 %% Output:
 % iso_bur_age: isochron burial age (Myr; scalar or 1x3 vector (original
@@ -42,6 +46,10 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 % (ditto)
 % lower_sigma_bur_age: lower 1 sigma absolute error of the burial age
 % (ditto)
+
+    if nargin == 10
+        option.flag2=0;
+    end
 
     disp('------------------------------------------------------------------------------------------------------------------');
     disp('Running the program.')
@@ -95,7 +103,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     end
 
     % iteration start
-    while(1)
+    while true
         out = york(data,alpha);
         b=out.b;
         a=out.a;
@@ -185,7 +193,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         sigma_a=0;
 
         % iteration start
-        while(1)
+        while true
             out = york_fixed_intercept(data,alpha,0);
             b=out.b;
             sigma_b=out.sb;
@@ -240,7 +248,6 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         %% max estimation: insert the post-burial concentration as a datum
         disp('Calculating the maximum burial age:');
         data=data_all;
-        option.flag2=0;
         % the post-burial concentration
         [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured_elv,shielding_factor,z,rho,option);
         option.flag=2;
@@ -277,7 +284,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         end
 
         % iteration start
-        while(1)
+        while true
             out = york(data,alpha);
             b=out.b;
             a=out.a;
