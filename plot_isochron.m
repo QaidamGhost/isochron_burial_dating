@@ -17,9 +17,8 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,ini
 % production_rate_ratio: production rate ratio of 26Al versus 10Be
 % (unitless; scalar)
 % option have fields as:
-%   option.flag: "0" for default usage, "1" for york regression whose
-%   intercept isfixed at zero, and "2" for protecting the added post-burial
-%   data point from being removed (unitless; scalar)
+%   option.flag: "0" for default usage, "1" for minimum estimation, and "2"
+%   for maximum estimation (unitless; scalar)
 %   option.Npb:
 %       option.Npb.x: post-burial 10Be concentration (atom/g; scalar)
 %       option.Npb.dx: 1 sigma absolute error of 10Be (atom/g; scalar)
