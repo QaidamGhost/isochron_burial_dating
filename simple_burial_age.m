@@ -1,6 +1,10 @@
 function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_burial_age(data,source_lat,source_elv,init_Rinh)
 
 %% Calculate the simple burial age of each sample
+% Note that the production rates ratio in this script is 6.61 (see
+% "production_rate.m"). If you want to set a different ratio of the
+% production rates, please replace "P260" as "RATIO * P100" in the
+% following codes.
 
 %% Arguments:
 % data must have fields as:
@@ -35,7 +39,6 @@ function [simple_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = simple_buria
     R=N26./N10;
     P100=production_rate(source_lat,source_elv,1,0,2.9,10);
     P260=production_rate(source_lat,source_elv,1,0,2.9,26);
-    % P260=6.75*P100;
 
     n=size(N10,2);   % number of data
     load consts.mat limit;
