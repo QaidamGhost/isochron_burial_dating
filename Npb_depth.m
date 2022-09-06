@@ -44,14 +44,14 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
         load e.mat e e_est
         e=e/1E+03;
         e_est=e_est/1E+03;
+        n2=max(size(e_est));
     elseif option.flag2==0
         e=0;
     end
     load expo_age.mat expo_age expo_age_est
     expo_age_est=expo_age_est./1E3;
     expo_age=expo_age/1E3;
-    tmp=size(expo_age_est);
-    n=tmp(1);
+    n=max(size(expo_age_est));
 
     % mean life for 10Be, 26Al, and bur
     % 10Be: Chmeleff et al., 2010; Korschinek et al., 2010
@@ -82,7 +82,7 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
         rand_tau_10=normrnd(tau_10,sigma_tau_10);
         rand_expo_age=expo_age_est(randi([1,n]));
         if option.flag2==1  % use erosion rate
-            rand_e=e_est(randi([1,n]));
+            rand_e=e_est(randi([1,n2]));
             rand_N10n_pb_max=rand_P10n_z/(1/rand_tau_10/1E+06+rho*rand_e/Ln)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Ln*rand_expo_age*1E+06));
             rand_N10ms_pb_max=rand_P10ms_z/(1/rand_tau_10/1E+06+rho*rand_e/Lms)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Lms*rand_expo_age*1E+06));
             rand_N10mf_pb_max=rand_P10mf_z/(1/rand_tau_10/1E+06+rho*rand_e/Lmf)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Lmf*rand_expo_age*1E+06));
@@ -111,7 +111,7 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
         rand_tau_26=normrnd(tau_26,sigma_tau_26);
         rand_expo_age=expo_age_est(randi([1,n]));
         if option.flag2==1  % use erosion rate
-            rand_e=e_est(randi([1,n]));
+            rand_e=e_est(randi([1,n2]));
             rand_N26n_pb_max=rand_P26n_z/(1/rand_tau_26/1E+06+rho*rand_e/Ln)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Ln*rand_expo_age*1E+06));
             rand_N26ms_pb_max=rand_P26ms_z/(1/rand_tau_26/1E+06+rho*rand_e/Lms)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Lms*rand_expo_age*1E+06));
             rand_N26mf_pb_max=rand_P26mf_z/(1/rand_tau_26/1E+06+rho*rand_e/Lmf)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Lmf*rand_expo_age*1E+06));
