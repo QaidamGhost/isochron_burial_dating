@@ -18,11 +18,39 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
  - york_fixed_intercept: A "york fit with a fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
 
 ## Instruction
- 0. The scripts assume the ratio of surface production rates as **6.61** which is indicated by the adopted mean life of 10Be and 26Al. **Try to modify the production rates and mean life in the codes if you want to switch to a different value of that ratio, or the results will show some inaccuracy.**
- 1. Define the variables, which are the arguments in "isochron_burial_dating.m", with your values.
- 2. Create a file "expo_age.mat" (and an optional "e.mat") in the folder where the .m-files are. See the instruction of these two files in "Npb_depth.m" for the creation.
- 3. Run "isochron_burial_age(data,init_Rinh,limit,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha);" in the command window.
- 4. Wait for the plots and values of burial age in the command window.
+### Preparation
+1.  The scripts assume the ratio of surface production rates as  **6.61**  which is indicated by the adopted mean life of 10Be and 26Al.  **Try to modify the production rates and mean life in the "consts.mat" and/or the codes in the "production_rate.m" if you want to switch to a different value of that ratio, or the results will show some inaccuracy in burial ages.**
+2. Make sure that all [DEPENDENCIES](https://github.com/QaidamGhost/isochron_burial_dating#software-version-and-dependency) are all promised.
+3. Create the file "expo_age.mat" (and an optional "e.mat") in the root directory. See the instruction of these two files in "Npb_depth.m" and "custom_mat_files" for the creation.
+4. Check the values restore in the "consts.mat". If you want to use some other values, just replace them in the .mat-file before running the scripts.
+### Calculation
+1.  Define the variables, which are the arguments in "isochron_burial_dating.m", with your values. See "arguments" in "isochron_burial_dating.m" for further instructions.
+```
+    data.x=[XXXXXX,XXXXXX,...,XXXXXX];
+    data.dx=[XXXXXX,XXXXXX,...,XXXXXX];
+    data.y=[XXXXXX,XXXXXX,...,XXXXXX];
+    data.dy=[XXXXXX,XXXXXX,...,XXXXXX];
+    shielding_factor=XXXXXX;
+    init_Rinh=XXXXXX;
+    source_lat=XXXXXX;
+    source_elv=XXXXXX;
+    measured_lat=XXXXXX;
+    measured_elv=XXXXXX;
+    z=XXXXXX;
+    rho=XXXXXX;
+    alpha=XXXXXX;
+    option.flag2=1; % optional
+```
+2.  Run "isochron_burial_age.m" in the command window.
+ ```
+	isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha,option);
+```
+### Output
+1. Print the simple burial ages and their uncertainties of each sample.
+2. Print the isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
+3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age. 
+3.1. Print the minimum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
+3.2. Print the maximum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
 
 ## Software Version and Dependency
  - Matlab 2021b or higher version (Recommend).
