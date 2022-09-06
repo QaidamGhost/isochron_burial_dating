@@ -5,6 +5,7 @@ function [Pn_z,sigma_Pn_z,Pms_z,sigma_Pms_z,Pmf_z,sigma_Pmf_z] = production_rate
 % by Chia-Yu Chen, Richard Ott, Erica Erlanger, Maarten Lupker, and Yanyan
 % Wang (Lupker et al., 2012). For a surface production rate calculation,
 % just set the "z" to zero and "rho" to an arbitrary value.
+% Note that the Spallation-induced production rates ratio here is 6.61.
 
 %% Arguments:
 % measured_lat: mearsured latitude of the sample (unitless; scalar)
