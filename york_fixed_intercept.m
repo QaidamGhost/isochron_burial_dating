@@ -1,6 +1,6 @@
 function out=york_fixed_intercept(data,alpha,afx)
 
-%% A "york fit a with fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
+%% A "york fit with a fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
 % This script is similiar to york.m but with a fixed intercept, modified after
 % a R script written by Pieter Vermeesch (personal communication).
 
