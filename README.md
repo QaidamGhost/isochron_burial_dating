@@ -52,13 +52,12 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 3.1. Print the minimum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
 3.2. Print the maximum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
 
-## Software Version and Dependency
- - Matlab 2021b or higher version (Recommend).
+## Dependencies (recommend)
+ - Matlab 2021b or higher version.
  - Optimization Toolbox 9.2 or higher version.
  - Statistics or Machine Learning Toolbox 12.2 or higher version.
- - Curve Fitting Toolbox 3.6 or higher version.
 
-## Platforms for Tests
+## Platforms for tests
  - Intel i9-9900K / HP OMEN by HP Obelisk Desktop 875-1xxx / Windows 10 21H2
  - AMD RYZEN R5-3600x / MSI B450m MORTAR / Windows 10 21H2
 
