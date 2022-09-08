@@ -75,6 +75,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     % production rate from spallation for 10Be and 26Al on the surface of the source area
     P100=production_rate(source_lat,source_elv,1,0,2.9,10);
     P260=production_rate(source_lat,source_elv,1,0,2.9,26);
+    Rs=P260/P100;
     fprintf('\n');
     disp('Calculating the isochron burial age:');
     % preclude reworked samples
@@ -156,7 +157,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     [~,upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache,iso_bur_age(1));
     %[iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache);
 
-    plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
+    plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,Rs,option);
     fprintf('Burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1));
 
     if out.a<0    % intercept less than zero -> use max and min estimation
@@ -242,7 +243,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         [~,upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache,iso_bur_age(2));
         %[iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache);
         
-        plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
+        plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,Rs,option);
         fprintf('Minimum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n\n',iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2));
         
         %% max estimation: insert the post-burial concentration as a datum
@@ -342,7 +343,10 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         [~,upper_sigma_bur_age(3),lower_sigma_bur_age(3)]=KDE(cache,iso_bur_age(3));
         %[iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3)]=KDE(cache);
 
-        plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,init_Rinh,option);
+        [P10n_z,~,P10ms_z,~,P10mf_z,~]=production_rate(measured_lat,measured_elv,shielding_factor,z,rho,10);
+        [P26n_z,~,P26ms_z,~,P26mf_z,~]=production_rate(measured_lat,measured_elv,shielding_factor,z,rho,26);
+        option.Rd=(P26n_z+P26ms_z+P26mf_z)/(P10n_z+P10ms_z+P10mf_z);
+        plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,Rs,option);
         fprintf('Maximum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
     end
     disp('------------------------------------------------------------------------------------------------------------------');
