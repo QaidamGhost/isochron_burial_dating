@@ -21,8 +21,8 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 ### Preparation
 1.  The scripts assume the ratio of surface production rates as  **6.61**  which is indicated by the adopted mean life of 10Be and 26Al.  **Try to modify the production rates and mean life in the "consts.mat" and/or the codes in the "production_rate.m" if you want to switch to a different value of that ratio, or the results will show some inaccuracy in burial ages.**
 2. Make sure that all [DEPENDENCIES](https://github.com/QaidamGhost/isochron_burial_dating/blob/main/README.md#dependencies-recommend) are promised.
-3. Create the file "expo_age.mat" (and an optional "e.mat") in the root directory. See the instruction of these two files in "Npb_depth.m" and "custom_mat_files" for the creation.
-4. Check the values restore in the "consts.mat". If you want to use some other values, just replace them in the .mat-file before running the scripts.
+3. Check the values restore in the "consts.mat". If you want to use some other values, just replace them in the .mat-file before running the scripts.
+4. Create the file "expo_age.mat" (and an optional "e.mat") in the root directory if min/max estimation are to be used. See the instruction of these two files in "Npb_depth.m" and "custom_mat_files" for the creation.
 ### Calculation
 1.  Define the variables, which are the arguments in "isochron_burial_dating.m", with your values. See "arguments" in "isochron_burial_dating.m" for further instructions.
 ```
