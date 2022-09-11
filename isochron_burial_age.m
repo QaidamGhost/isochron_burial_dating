@@ -1,4 +1,4 @@
-function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha,option)
+function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,option)
 
 %% An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
 %  Note that the script will calculate minimum and maximum burial age if
@@ -32,7 +32,6 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 % shielding_factor: (unitless; scalar)
 % z: depth of samples (cm; scalar)
 % rho: density of the overburdens (g/cm^3; scalar)
-% alpha: cutoff value for confidence intervals (unitless; scalar)
 % option2: "1" for loading e.mat and "0" for using default value zero for
 % erosion rate for a "constant exposure" situation during the maximum
 % estimation when the first iterated isochron line's intercept is less than
@@ -47,19 +46,18 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 % lower_sigma_bur_age: lower 1 sigma absolute error of the burial age
 % (ditto)
 
-    if nargin == 10
-        option.flag2=0;
-    end
-
     disp('------------------------------------------------------------------------------------------------------------------');
     disp('Running the program.')
     data_all=data;
 
+    load consts.mat alpha;
     fprintf('Estimated production rate ratio is %.2f.\n',init_Rinh);
     fprintf('The average latitude and elevation in the source area are %.2f degrees and %d meters.\n',source_lat,source_elv);
-    fprintf('The latitude and elevation of the samples are %.2f degrees and %d meters.\n',measured_lat,measured_elv);
-    fprintf('The shielding factor is %.5f.\n',shielding_factor);
-    fprintf('The thickness and density of the overburdens upon the samples are %d cm and %.2f g/cm^3.\n',z,rho);
+    if nargin > 4
+        fprintf('The latitude and elevation of the samples are %.2f degrees and %d meters.\n',measured_lat,measured_elv);
+        fprintf('The shielding factor is %.5f.\n',shielding_factor);
+        fprintf('The thickness and density of the overburdens upon the samples are %d cm and %.2f g/cm^3.\n',z,rho);
+    end
     fprintf('The cutoff value for confidence intervals is %.2f.\n\n',alpha);
     % simple burial dating
     simple_burial_age(data,source_lat,source_elv,init_Rinh);
@@ -163,6 +161,15 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     if out.a<0    % intercept less than zero -> use max and min estimation
         fprintf('\n');
         disp('WARNING! NEGATIVE INTERCEPT DETECTED!');
+        if nargin==4    
+            disp('PLEASE input measured_lat, measured_elv, shielding_factor, z, rho (, and option) and then run the script again for min/max estimation!');
+            iso_bur_age=NaN;
+            upper_sigma_bur_age=NaN;
+            lower_sigma_bur_age=NaN;
+            return;
+        elseif nargin == 9  % no option for max estimation
+            option.flag2=0;
+        end
         disp('The isochron burial age could be dramatically underestimated by the previous value.');
         disp('------------------------------------------------------------------------------------------------------------------');
         disp('Here calculate the minimum and maximum constraints on the burial age.');
@@ -245,7 +252,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,Rs,option);
         fprintf('Minimum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n\n',iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2));
-        
+     
         %% max estimation: insert the post-burial concentration as a datum
         disp('Calculating the maximum burial age:');
         data=data_all;
