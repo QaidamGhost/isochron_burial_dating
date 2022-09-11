@@ -5,7 +5,7 @@
 The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018, the "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication), and the "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in this directory.**
 
 ## List of .mat and .m-files
- - consts.mat: constants for calculation, including Stone's scaling parameters, mean life of 10Be and 26Al, step for KDE, simalation times, SLHL production rates, limit for iterations, and attenuation lengths of nuclide and muons.
+ - consts.mat: constants for calculation, including Stone's scaling parameters, mean life of 10Be and 26Al, alpha as the cutoff value, step for KDE, simalation times, SLHL production rates, limit for iterations, and attenuation lengths of nuclide and muons.
  - custom_mat_files: Generate custom "e.mat" and "expo_age.mat" before maximum estimation if erosion rates and exposure age have already been known.
  - isochron_burial_age: An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
  - KDE: Find the most probable value and 1 sigma absolute error for the observed simulations of an random variable after establishing the probability density function by a "nonparametric estimation" approach knows as kernel density estimation (KDE).
@@ -34,16 +34,20 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
     init_Rinh=XXXXXX;
     source_lat=XXXXXX;
     source_elv=XXXXXX;
+    %if intercept fall below the origin, the following variables are needed as additional arguments for min/max estimation
     measured_lat=XXXXXX;
     measured_elv=XXXXXX;
     z=XXXXXX;
     rho=XXXXXX;
-    alpha=XXXXXX;
     option.flag2=1; % optional
 ```
 2.  Run "isochron_burial_age.m" in the command window.
  ```
-	isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,alpha,option);
+	% for isochron burial dating only
+	isochron_burial_age(data,init_Rinh,source_lat,source_elv);
+	
+	% for isochron burial dating and min/max estimation owing to negative intercept
+	isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,option);
 ```
 ### Output
 1. Print the simple burial ages and their uncertainties of each sample.
