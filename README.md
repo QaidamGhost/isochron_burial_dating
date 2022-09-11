@@ -2,7 +2,7 @@
 
 **June 10, 2022**
 
-The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018, the "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication), and the "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in this directory.**
+The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018, the "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication), and the "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in the following list.**
 
 ## List of .mat and .m-files
  - consts.mat: constants for calculation, including Stone's scaling parameters, mean life of 10Be and 26Al, alpha as the cutoff value, step for KDE, simalation times, SLHL production rates, limit for iterations, and attenuation lengths of nuclide and muons.
@@ -53,8 +53,8 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 1. Print the simple burial ages and their uncertainties of each sample.
 2. Print the isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
 3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age. 
-3.1. Print the minimum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
-3.2. Print the maximum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
+3. 1. Print the minimum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
+3. 2. Print the maximum isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
 
 ## Dependencies (recommend)
  - Matlab 2021b or higher version.
