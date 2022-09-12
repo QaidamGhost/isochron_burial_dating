@@ -7,7 +7,7 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
 % criterion, while the MSWD remains high during iteration. Please try to
 % remove these outliers manually at first if it helps dramatically reduce
 % the MSWD (see Odom, 2020).
-%
+
 %% Arguments:
 % data must have fields as:
 %   data.x: measured 10Be concentration (atom/g; 1xn vector)
@@ -38,9 +38,9 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
     MSWD=-1;
     
     if option.flag==0
-        out = york(data,alpha);
+        out = york(data);
     elseif option.flag==1
-        out = york_fixed_intercept(data,alpha,0);
+        out = york_fixed_intercept(data,0);
     % combine the post-burial concentration with the measured data
     % the post-burial concentration is the last elements in each field in
     % data2
@@ -49,7 +49,7 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
         data2.dx=[data.dx,option.Npb.dx];
         data2.y=[data.y,option.Npb.y];
         data2.dy=[data.dy,option.Npb.dy];
-        out = york(data2,alpha);
+        out = york(data2);
     end
     if (out.mswd<=1)
         new_data=data;
@@ -181,11 +181,11 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
         end
 
         if option.flag==0
-            out = york(data,alpha);
+            out = york(data);
         elseif option.flag==1
-            out = york_fixed_intercept(data,alpha,0);
+            out = york_fixed_intercept(data,0);
         elseif option.flag==2
-            out = york(data2,alpha);
+            out = york(data2);
         end
 
         MSWD=out.mswd;
