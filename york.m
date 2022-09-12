@@ -1,4 +1,4 @@
-function out=york(data,alpha)
+function out=york(data)
 
 %% A "york fit" script modified after york.R in IsoplotR by Vermeesch, 2018
 % "Details: Given n pairs of (approximately) collinear measurements X_i 
@@ -19,11 +19,9 @@ function out=york(data,alpha)
 %   data.y: y-values (ditto; 1xn vector)
 %   data.dy: 1 sigma absolute error of y-values (ditto; 1xn vector)
 %   data.covxy: correlation coefficients (unitless; 1xn vector; optionally)
-% alpha: cutoff value for confidence intervals (unitless; scalar)
 
 %% Output:
 % out have fields as:
-%   out.alpha: value of the eponymous input argument (unitless; scalar)
 %   out.a: intercept of the straight line fit (same as data.x; scalar)
 %   out.sa: standard error of the intercept (ditto; scalar)
 %   out.b: slope of the fit (ditto; scalar)
@@ -77,7 +75,6 @@ function out=york(data,alpha)
     sa=sqrt(1/sum(W,'omitnan')+(xbar*sb)^2);
    
     % output
-    out.alpha=alpha;
     out.a=a;
     out.sa=sa;
     out.b=b;
