@@ -61,7 +61,7 @@ function out=york(data,alpha)
         Ybar=sum(W.*data.y,'omitnan')/sum(W,'omitnan');
         U=data.x-Xbar;
         V=data.y-Ybar;
-        B=W.*(U./wY+b.*V./wX-(b.*U+V).*data.covxy/A);
+        B=W.*(U./wY+b.*V./wX-(b.*U+V).*data.covxy./A);
         b=sum(W.*B.*V,'omitnan')/sum(W.*B.*U,'omitnan');
         if ((bold/b-1)^2 < 1e-15)
             break;
