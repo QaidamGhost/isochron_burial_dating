@@ -1,6 +1,6 @@
-function out=york_fixed_intercept(data,alpha,afx)
+function out=york_fixed_intercept(data,afx)
 
-%% A "york fit with a fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
+%% A "york fit a with fixed intercept" script modified after an unpublished R script written by Pieter Vermeesch (personal communication)
 % This script is similiar to york.m but with a fixed intercept, modified after
 % a R script written by Pieter Vermeesch (personal communication).
 
@@ -11,12 +11,10 @@ function out=york_fixed_intercept(data,alpha,afx)
 %   data.y: y-values (ditto; 1xn vector)
 %   data.dy: 1 sigma absolute error of y-values (ditto; 1xn vector)
 %   data.covxy: correlation coefficients (unitless; 1xn vector; optionally)
-% alpha: cutoff value for confidence intervals (unitless; scalar)
 % afx: value of the fixed intercept (same as data.x; scalar)
 
 %% Output:
 % out have fields as:
-%   out.alpha: value of the eponymous input argument (unitless; scalar)
 %   out.a: intercept of the straight line fit (same as data.x; scalar)
 %   out.sa: standard error of the intercept (ditto; scalar)
 %   out.b: slope of the fit (ditto; scalar)
@@ -55,7 +53,6 @@ function out=york_fixed_intercept(data,alpha,afx)
     W=wX.*wY./(wX+b.*b.*wY-2.*b.*data.covxy.*A);
     xbar=sum(W.*data.x,'omitnan')/sum(W,'omitnan');
     % output
-    out.alpha=alpha;
     out.a=a;
     out.sa=0;
     out.b=b;
