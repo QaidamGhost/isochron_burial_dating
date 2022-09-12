@@ -103,7 +103,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
     % iteration start
     while true
-        out = york(data,alpha);
+        out = york(data);
         b=out.b;
         a=out.a;
         sigma_a=out.sa;
@@ -202,7 +202,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
         % iteration start
         while true
-            out = york_fixed_intercept(data,alpha,0);
+            out = york_fixed_intercept(data,0);
             b=out.b;
             sigma_b=out.sb;
             % recover previous linearized data from data_backup
@@ -293,7 +293,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
         % iteration start
         while true
-            out = york(data,alpha);
+            out = york(data);
             b=out.b;
             a=out.a;
             sigma_b=out.sb;
