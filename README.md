@@ -54,7 +54,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 2. Print the isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
 3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age along with MSWD and age uncertainties, and plot the isochron line with measured data, linearized data, and reworked clasts.
 
-## Dependencies (recommend)
+## Dependencies and recommended version
  - Matlab 2021b or higher version.
  - Optimization Toolbox 9.2 or higher version.
  - Statistics and Machine Learning Toolbox 12.2 or higher version.
