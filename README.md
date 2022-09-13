@@ -20,7 +20,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 ## Instruction
 ### Preparation
 1.  The scripts assume the ratio of surface production rates as  **6.61**  which is indicated by the adopted mean life of 10Be and 26Al.  **Try to modify the production rates and mean life in the "consts.mat" and/or the codes in the "production_rate.m" if you want to switch to a different value of that ratio, or the results will show some inaccuracy in burial ages.**
-2. Make sure that all [DEPENDENCIES](https://github.com/QaidamGhost/isochron_burial_dating/blob/main/README.md#dependencies-recommend) are promised.
+2. Make sure that all [DEPENDENCIES](https://github.com/QaidamGhost/isochron_burial_dating/blob/main/README.md#dependencies-and-recommended-versions) are promised.
 3. Check the values restore in the "consts.mat". If you want to use some other values, just replace them in the .mat-file before running the scripts.
 4. Create the file "expo_age.mat" (and an optional "e.mat") in the root directory if min/max estimation are to be used. See the instruction of these two files in "Npb_depth.m" and "custom_mat_files" for the creation.
 ### Calculation
@@ -54,7 +54,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 2. Print the isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
 3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age along with MSWD and age uncertainties, and plot the isochron line with measured data, linearized data, and reworked clasts.
 
-## Dependencies and recommended version
+## Dependencies and recommended versions
  - Matlab 2021b or higher version.
  - Optimization Toolbox 9.2 or higher version.
  - Statistics and Machine Learning Toolbox 12.2 or higher version.
