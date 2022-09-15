@@ -138,8 +138,14 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     
     fprintf('MSWD is %.3g.\n',out.mswd);
 
+    % weighted mean for Rinh
+    wX=1./data.dx./data.dx;
+    wY=1./data.dy./data.dy;
+    W=wX.*wY./(wX+b.*b.*wY);
+    Rinh_bar=sum(W.*Rinh,'omitnan')/sum(W,'omitnan');
+
     % Monte-Carlo simulation
-    iso_bur_age(1)=-tau_bur*log(b/mean(Rinh));
+    iso_bur_age(1)=-tau_bur*log(b/Rinh_bar);
     cache=zeros(1,simulation_times);
     for i=1:simulation_times
         while true
@@ -149,7 +155,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             end
         end
         rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
-        rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
+        rand_bur_age=-rand_tau_bur*log(rand_b/Rinh_bar);
         cache(i)=rand_bur_age;
     end
     [~,upper_sigma_bur_age(1),lower_sigma_bur_age(1)]=KDE(cache,iso_bur_age(1));
@@ -233,8 +239,14 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         
         fprintf('MSWD is %.3g.\n',out.mswd);
 
+        % weighted mean for Rinh
+        wX=1./data.dx./data.dx;
+        wY=1./data.dy./data.dy;
+        W=wX.*wY./(wX+b.*b.*wY);
+        Rinh_bar=sum(W.*Rinh,'omitnan')/sum(W,'omitnan');
+
         % Monte-Carlo simulation
-        iso_bur_age(2)=-tau_bur*log(b/mean(Rinh));
+        iso_bur_age(2)=-tau_bur*log(b/mean(Rinh_bar));
         cache=zeros(1,simulation_times);
         for i=1:simulation_times
             while true
@@ -244,7 +256,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
                 end
             end
             rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
-            rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
+            rand_bur_age=-rand_tau_bur*log(rand_b/Rinh_bar);
             cache(i)=rand_bur_age;
         end
         [~,upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache,iso_bur_age(2));
@@ -333,8 +345,15 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 
         fprintf('MSWD is %.3g.\n',out.mswd);
 
+        % weighted mean for Rinh
+        wX=1./data.dx./data.dx;
+        wY=1./data.dy./data.dy;
+        W=wX.*wY./(wX+b.*b.*wY);
+        W(n)=[]; % Rinh of post-burial data point is precluded
+        Rinh_bar=sum(W.*Rinh,'omitnan')/sum(W,'omitnan');
+
         % Monte-Carlo simulation
-        iso_bur_age(3)=-tau_bur*log(b/mean(Rinh));
+        iso_bur_age(3)=-tau_bur*log(b/Rinh_bar);
         cache=zeros(1,simulation_times);
         for i=1:simulation_times
             while true
@@ -344,7 +363,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
                 end
             end
             rand_tau_bur=normrnd(tau_bur,sigma_tau_bur);
-            rand_bur_age=-rand_tau_bur*log(rand_b/mean(Rinh));
+            rand_bur_age=-rand_tau_bur*log(rand_b/Rinh_bar);
             cache(i)=rand_bur_age;
         end
         [~,upper_sigma_bur_age(3),lower_sigma_bur_age(3)]=KDE(cache,iso_bur_age(3));
