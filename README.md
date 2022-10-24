@@ -5,10 +5,10 @@
 The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018, the "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication), and the "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in the following list.**
 
 ## List of .mat and .m-files
- - consts.mat: constants for calculation, including Stone's scaling parameters, mean life of 10Be and 26Al, alpha as the cutoff value, step for KDE, simalation times, SLHL production rates, limit for iterations, and attenuation lengths of nuclide and muons.
+ - consts.mat: constants for calculation, including Stone's scaling parameters, mean lives of 10Be and 26Al, alpha as the cutoff value, step for KDE, simulation times, SLHL production rates, the limit for iterations, and attenuation lengths of nuclide and muons.
  - custom_mat_files: Generate custom "e.mat" and "expo_age.mat" before maximum estimation if erosion rates and exposure age have already been known.
  - isochron_burial_age: An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
- - KDE: Find the most probable value and 1 sigma absolute error for the observed simulations of an random variable after establishing the probability density function by a "nonparametric estimation" approach knows as kernel density estimation (KDE).
+ - KDE: Find the most probable value and 1 sigma absolute error for the observed simulations of a random variable after establishing the probability density function by a "nonparametric estimation" approach known as kernel density estimation (KDE).
  - Npb_depth: Calculate the maximum estimation of the post-burial concentrations with 1 sigma error at the sampling location and penetration depth if the maximum exposure age (and additional erosion rate) of the surface is constrained.
  - plot_isochron: Plot isochron line, production ratio line, and errorbars of samples
  - production_rate: Calculate 10Be or 26Al Production Rates on the surface or at a given depth from Spallation and Muons.
@@ -22,9 +22,9 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 1.  The scripts assume the ratio of surface production rates as  **6.61**  which is indicated by the adopted mean lives of 10Be and 26Al.  **Try to modify the production rates and mean lives in the "consts.mat" and/or the codes in the "production_rate.m" if you want to switch to a different value of that ratio, or the results will show some inaccuracy in the burial ages.**
 2. Make sure that all [DEPENDENCIES](https://github.com/QaidamGhost/isochron_burial_dating/blob/main/README.md#dependencies-and-recommended-versions) are promised.
 3. Check the values restored in the "consts.mat". If you want to use other values, just replace them in the .mat-file before running the scripts.
-4. Create the file "expo_age.mat" (and an optional "e.mat") in the root directory if min/max estimations are to be used. See the instruction of these two files in "Npb_depth.m" and "custom_mat_files" for the creation.
+4. Create the file "expo_age.mat" (and an optional "e.mat") in the root directory if min/max estimations are to be used. See the instruction for these two files in "Npb_depth.m" and "custom_mat_files" for the creation.
 ### Calculation
-1.  Define the variables, which are the arguments in "isochron_burial_dating.m", with your values. See "arguments" in "isochron_burial_dating.m" for further instructions.
+1.  Define the variables, the arguments in "isochron_burial_dating.m", with your values. See "arguments" in "isochron_burial_dating.m" for further instructions.
 ```
     data.x=[XXXXXX,XXXXXX,...,XXXXXX];
     data.dx=[XXXXXX,XXXXXX,...,XXXXXX];
@@ -34,7 +34,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
     init_Rinh=XXXXXX;
     source_lat=XXXXXX;
     source_elv=XXXXXX;
-    %if intercept fall below the origin, the following variables are needed as additional arguments for min/max estimation
+    %if the intercept falls below the origin, the following variables are needed as additional arguments for min/max estimation
     measured_lat=XXXXXX;
     measured_elv=XXXXXX;
     z=XXXXXX;
@@ -46,13 +46,13 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 	% for isochron burial dating only
 	isochron_burial_age(data,init_Rinh,source_lat,source_elv);
 	
-	% for isochron burial dating and min/max estimation owing to negative intercept
+	% for isochron burial dating and min/max estimations owing to negative intercept
 	isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,option);
 ```
 ### Output
-1. Print the simple burial ages and their uncertainties of each sample.
+1. Print the simple burial ages and the uncertainties of each sample.
 2. Print the isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
-3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age along with MSWD and age uncertainties, and plot the isochron line with measured data, linearized data, and reworked clasts.
+3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age MSWD and plot the isochron line with measured data, linearized data, and reworked clasts.
 
 ## Dependencies and recommended versions
  - Matlab 2021b or higher version.
