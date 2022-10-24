@@ -2,7 +2,7 @@
 
 **June 10, 2022**
 
-The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018, the "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication), and the "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in the following list.**
+The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018. The "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication). The "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in the following list.**
 
 ## List of .mat and .m-files
  - consts.mat: constants for calculation, including Stone's scaling parameters, mean lives of 10Be and 26Al, alpha as the cutoff value, step for KDE, simulation times, SLHL production rates, the limit for iterations, and attenuation lengths of nuclide and muons.
@@ -30,13 +30,13 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
     data.dx=[XXXXXX,XXXXXX,...,XXXXXX];
     data.y=[XXXXXX,XXXXXX,...,XXXXXX];
     data.dy=[XXXXXX,XXXXXX,...,XXXXXX];
-    shielding_factor=XXXXXX;
     init_Rinh=XXXXXX;
     source_lat=XXXXXX;
     source_elv=XXXXXX;
     %if the intercept falls below the origin, the following variables are needed as additional arguments for min/max estimation
     measured_lat=XXXXXX;
     measured_elv=XXXXXX;
+    shielding_factor=XXXXXX;
     z=XXXXXX;
     rho=XXXXXX;
     option.flag2=1; % optional
