@@ -33,7 +33,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
     init_Rinh=XXXXXX;
     source_lat=XXXXXX;
     source_elv=XXXXXX;
-    %if the intercept falls below the origin, the following variables are needed as additional arguments for min/max estimation
+    %if the intercept falls below the origin, the following variables are needed as additional arguments for min/max estimations
     measured_lat=XXXXXX;
     measured_elv=XXXXXX;
     shielding_factor=XXXXXX;
@@ -50,9 +50,9 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 	isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,option);
 ```
 ### Output
-1. Print the simple burial ages and the uncertainties of each sample.
-2. Print the isochron burial ages, MSWD, and its uncertainties and plot the isochron line with measured data, linearized data, and reworked clasts.
-3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age MSWD and plot the isochron line with measured data, linearized data, and reworked clasts.
+1. Print the simple burial ages and their uncertainties.
+2. Print the isochron burial ages with MSWD and plot the isochron line with measured data, linearized data, and reworked clasts.
+3. If the final intercept in step 2 is less than zero, the scripts will give minimum and maximum estimations of the burial age with MSWD and plot the isochron line with measured data, linearized data, and reworked clasts.
 
 ## Dependencies and recommended versions
  - Matlab 2021b or higher version.
