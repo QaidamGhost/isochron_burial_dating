@@ -32,10 +32,10 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 % shielding_factor: (unitless; scalar)
 % z: depth of samples (cm; scalar)
 % rho: density of the overburdens (g/cm^3; scalar)
-% option2: "1" for loading e.mat and "0" for using default value zero for
-% erosion rate for a "constant exposure" situation during the maximum
-% estimation when the first iterated isochron line's intercept is less than
-% zero (unitless; scalar)
+% option.flag2: "1" for loading e.mat and "0" for using default value zero for
+%    erosion rate for a "constant exposure" situation during the maximum
+%    estimation when the first iterated isochron line's intercept is less than
+%    zero (unitless; scalar)
 
 %% Output:
 % iso_bur_age: isochron burial age (Myr; scalar or 1x3 vector (original
