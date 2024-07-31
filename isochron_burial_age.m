@@ -106,6 +106,14 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         out = york(data);
         b=out.b;
         a=out.a;
+        if b<0
+            disp('Error! Negative slope due to bad data!');
+            disp('Try to manually remove outliers or add new 26Al-10Be data that are distinguishable from the former data.');
+            iso_bur_age=NaN;
+            upper_sigma_bur_age=NaN;
+            lower_sigma_bur_age=NaN;
+            return;
+        end
         sigma_a=out.sa;
         sigma_b=out.sb;
         % recover previous linearized data from data_backup
@@ -211,6 +219,14 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             out = york_fixed_intercept(data,0);
             b=out.b;
             sigma_b=out.sb;
+            if b<0
+                disp('Error! Negative slope due to bad data!');
+                disp('Try to manually remove outliers or add new 26Al-10Be data that are distinguishable from the former data.');
+                iso_bur_age=NaN;
+                upper_sigma_bur_age=NaN;
+                lower_sigma_bur_age=NaN;
+                return;
+            end
             % recover previous linearized data from data_backup
             data=data_backup;
             % calculate the burial age using slope and Rinh (Erlanger,
@@ -310,6 +326,14 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
             a=out.a;
             sigma_b=out.sb;
             sigma_a=out.sa;
+            if b<0
+                disp('Error! Negative slope due to bad data!');
+                disp('Try to manually remove outliers or add new 26Al-10Be data that are distinguishable from the former data.');
+                iso_bur_age=NaN;
+                upper_sigma_bur_age=NaN;
+                lower_sigma_bur_age=NaN;
+                return;
+            end
             % recover previous linearized data from data_backup
             data=data_backup;
             % calculate the burial age using slope and Rinh (Erlanger,
