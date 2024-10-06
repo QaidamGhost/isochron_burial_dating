@@ -51,7 +51,7 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
         data2.dy=[data.dy,option.Npb.dy];
         out = york(data2);
     end
-    if (out.mswd<=1)
+    if (out.mswd<=5)
         new_data=data;
         disp('No reworked clast is removed.');
         return;
@@ -108,8 +108,8 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
                     fprintf('%d reworked clasts are removed.\n',count);
                 end
             end
-            if out.mswd>1
-                fprintf('Warning! MSWD is beyond "1".\n');
+            if out.mswd>5
+                fprintf('Warning! MSWD is still far greater than "1". Please manually remove potential outliers\n');
             end
             return;
         end
@@ -136,8 +136,8 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
                     fprintf('%d reworked clasts are removed.\n',count);
                 end
             end
-            if out.mswd>1
-                fprintf('Warning! MSWD is beyond "1".\n');
+            if out.mswd>5
+                fprintf('Warning! MSWD is still far greater than "1". Please manually remove potential outliers\n');
             end
             return;
         end
@@ -151,8 +151,8 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
                 data2.y(:,m)=[];
                 data2.dy(:,m)=[];
                 new_data=data2;
-                if out.mswd>1
-                    fprintf('Warning! MSWD is beyond "1".\n');
+                if out.mswd>5
+                    fprintf('Warning! MSWD is still far greater than "1". Please manually remove potential outliers\n');
                 end
                 return;
             end
@@ -189,7 +189,7 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
         end
 
         MSWD=out.mswd;
-        if(out.mswd<=1)
+        if(out.mswd<=5)
             if (count==1)
                 disp('1 reworked clast is removed.');
             else
