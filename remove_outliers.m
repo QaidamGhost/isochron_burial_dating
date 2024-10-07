@@ -19,7 +19,7 @@ function [new_data,removed_data,MSWD] = remove_outliers(data,alpha,option)
 %   option.flag: "0" for default usage, "1" for york regression whose
 %   intercept isfixed at zero, and "2" for protecting the added post-burial
 %   data point from being removed (unitless; scalar)
-%   option.Npb: maximum post-burial concentration and have fields as:
+%   option.Npb: upper limit of post-burial concentration and have fields as:
 %       option.Npb.x: post-burial 10Be concentration (atom/g; scalar)
 %       option.Npb.dx: 1 sigma absolute error of 10Be (atom/g; scalar)
 %       option.Npb.y: post-burial 26Al concentration (atom/g; scalar)
