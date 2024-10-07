@@ -1,13 +1,13 @@
 function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial_age(data,init_Rinh,source_lat,source_elv,measured_lat,measured_elv,shielding_factor,z,rho,option)
 
 %% An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
-%  Note that the script will calculate minimum and maximum burial age if
-%  the intercept of the original isochron line is below zero.
-%  A. The minimum estimation ignores the post-burial production in the
+%  Note that the script will calculate the upper and lower limits of the  
+%  burial age if the intercept of the original isochron line is below zero.
+%  A. The lower limit ignores the post-burial production in the
 %  samples and calculates the burial age which is similar to simple burial
 %  dating.
-%  B. On the contrary, the maximum estimation calculate the burial age by
-%  maximizing the post-burial production whose constraint could be
+%  B. On the contrary, the upper limit calculate the burial age by
+%  modelling the post-burial production whose constraint could be
 %  different as followings.
 %  B1. Gibbon et al., 2009 assumes the depth of their sample has not
 %  changed since its burial and erosion has been in absence. This
@@ -15,7 +15,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 %  calculate the post-burial concentration using eq. 32 in Granger, 2014.
 %  Finally, the burial age will be solved iteratively.
 %  B2. Unlike this approach, we using a previously known exposure age
-%  rather than the burial age to estimate the maximum. See "Npb_depth.m"
+%  rather than the burial age to constrain the upper limit. See "Npb_depth.m"
 %  for more details of the calculation.
 
 %% Arguments:
@@ -33,14 +33,14 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
 % z: depth of samples (cm; scalar)
 % rho: density of the overburdens (g/cm^3; scalar)
 % option.flag2: "1" for loading e.mat and "0" for using default value zero for
-%    erosion rate for a "constant exposure" situation during the maximum
-%    estimation when the first iterated isochron line's intercept is less than
+%    erosion rate for a "constant exposure" situation during constraining the
+%    upper limit when the first iterated isochron line's intercept is less than
 %    zero (unitless; scalar)
 
 %% Output:
 % iso_bur_age: isochron burial age (Myr; scalar or 1x3 vector (original
-% burial age, minimum burial age, and maximum burial age) if the intercept
-% of the original isochron line is below zero)
+% burial age, lower limit of the burial age, and upper limit of the burial age) 
+% if the intercept of the original isochron line is below zero)
 % upper_sigma_bur_age: upper 1 sigma absolute error of the burial age
 % (ditto)
 % lower_sigma_bur_age: lower 1 sigma absolute error of the burial age
@@ -172,23 +172,23 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
     plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,Rs,option);
     fprintf('Burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(1),upper_sigma_bur_age(1),lower_sigma_bur_age(1));
 
-    if out.a<0    % intercept less than zero -> use max and min estimation
+    if out.a<0    % intercept less than zero -> use upper and lower limits constraints
         fprintf('\n');
         disp('WARNING! NEGATIVE INTERCEPT DETECTED!');
         if nargin==4    
-            disp('PLEASE input measured_lat, measured_elv, shielding_factor, z, rho (, and option) and then run the script again for min/max estimation!');
+            disp('PLEASE input measured_lat, measured_elv, shielding_factor, z, rho (, and option) and then run the script again for the upper and lower limits!');
             iso_bur_age=NaN;
             upper_sigma_bur_age=NaN;
             lower_sigma_bur_age=NaN;
             return;
-        elseif nargin == 9  % no option for max estimation
+        elseif nargin == 9  % no option for the upper limit
             option.flag2=0;
         end
         disp('The isochron burial age could be dramatically underestimated by the previous value.');
         disp('------------------------------------------------------------------------------------------------------------------');
-        disp('Here calculate the minimum and maximum constraints on the burial age.');
-        %% min estimation: intercept fixed at zero
-        disp('Calculating the minimum burial age:');
+        disp('Here calculate the upper and lower limits of the burial age.');
+        %% lower limit of the burial age: intercept fixed at zero
+        disp('Calculating the lower limit of the burial age:');
         data=data_all;
         option.flag=1;
         [data,removed_data,~] = remove_outliers(data,alpha,option);
@@ -279,10 +279,10 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         %[iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2)]=KDE(cache);
         
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,Rs,option);
-        fprintf('Minimum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n\n',iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2));
+        fprintf('Lower limit of the burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n\n',iso_bur_age(2),upper_sigma_bur_age(2),lower_sigma_bur_age(2));
      
-        %% max estimation: insert the post-burial concentration as a datum
-        disp('Calculating the maximum burial age:');
+        %% upper limit of the burial age: insert the post-burial concentration as a datum
+        disp('Calculating the upper limit of the burial age:');
         data=data_all;
         % the post-burial concentration
         [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured_elv,shielding_factor,z,rho,option);
@@ -397,7 +397,7 @@ function [iso_bur_age,upper_sigma_bur_age,lower_sigma_bur_age] = isochron_burial
         [P26n_z,~,P26ms_z,~,P26mf_z,~]=production_rate(measured_lat,measured_elv,shielding_factor,z,rho,26);
         option.Rd=(P26n_z+P26ms_z+P26mf_z)/(P10n_z+P10ms_z+P10mf_z);
         plot_isochron(a,sigma_a,b,sigma_b,data,data_backup,removed_data,Rs,option);
-        fprintf('Maximum burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
+        fprintf('Upper limit of the burial age is %f Myr, upper 1 sigma error is %+f Myr, and lower 1 sigma error is %f Myr.\n',iso_bur_age(3),upper_sigma_bur_age(3),lower_sigma_bur_age(3));
     end
     disp('------------------------------------------------------------------------------------------------------------------');
 end
