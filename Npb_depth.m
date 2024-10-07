@@ -1,6 +1,6 @@
 function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured_elv,shielding_factor,z,rho,option)
 
-%% Calculate the maximum estimation of the post-burial concentrations with 1 sigma error at the sampling location and penetration depth if the maximum exposure age (and additional erosion rate) of the surface is constrained.
+%% Calculate the upper limit of the post-burial concentrations with 1 sigma error at the sampling location and penetration depth if the exposure age (and additional erosion rate) of the surface is constrained.
 %
 %% Arguments:
 % measured_lat: mearsured latitude of the samples (degree; scalar)
@@ -14,10 +14,10 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
 %   scalar)
 %
 %% Output
-% N10pb: the maximum estimate of the post burial 10Be concentration
+% N10pb: the upper limit of the post burial 10Be concentration
 % (atom/g;scalar) 
 % sigma_N10pb: 1 sigma absolute error of N10pb (atom/g;scalar)
-% N26pb: the maximum estimate of the post burial 26Al concentration
+% N26pb: the upper limit of the post burial 26Al concentration
 % (atom/g;scalar) 
 % sigma_N26pb: 1 sigma absolute error of N26pb (atom/g;scalar)
 
@@ -33,9 +33,10 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
 % variables "expo_age" (cm/Kyr; scalar; the most probable value of the
 % simulations of erosion rate) and "expo_age_est" (cm/Kyr; nx1 vector; the
 % simulations of erosion rate during each simulation).
-% If you want to calculate a maximum isochron burial age and already know
-% the value and absolate 1 sigma error of erosion rate and exposure age,
-% you can use "custom_mat_files.m" to generate "e.mat" and "expo_age.mat".
+% If you want to calculate upper limit of the isochron burial age and 
+% already know the value and absolate 1 sigma error of erosion rate and 
+% exposure age, you can use "custom_mat_files.m" to generate "e.mat" and 
+% "expo_age.mat".
 % Note that the input exposure age and erosion rate should be Gaussian
 % distribution, or you should use Hidy's modified scripts to generate the
 % "expo_age.mat" and "e.mat" file.
@@ -68,10 +69,10 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
     load consts.mat Ln Lms Lmf;
     
     % post-burial 10Be (eqn6 in Lal, 1991)
-    N10n_pb_max=P10n_z/(1/tau_10/1E+06+rho*e/Ln)*(1-exp(-expo_age/tau_10-rho*e/Ln*expo_age*1E+06));
-    N10ms_pb_max=P10ms_z/(1/tau_10/1E+06+rho*e/Lms)*(1-exp(-expo_age/tau_10-rho*e/Lms*expo_age*1E+06));
-    N10mf_pb_max=P10mf_z/(1/tau_10/1E+06+rho*e/Lmf)*(1-exp(-expo_age/tau_10-rho*e/Lmf*expo_age*1E+06));
-    N10pb=N10n_pb_max+N10ms_pb_max+N10mf_pb_max;
+    N10n_pb=P10n_z/(1/tau_10/1E+06+rho*e/Ln)*(1-exp(-expo_age/tau_10-rho*e/Ln*expo_age*1E+06));
+    N10ms_pb=P10ms_z/(1/tau_10/1E+06+rho*e/Lms)*(1-exp(-expo_age/tau_10-rho*e/Lms*expo_age*1E+06));
+    N10mf_pb=P10mf_z/(1/tau_10/1E+06+rho*e/Lmf)*(1-exp(-expo_age/tau_10-rho*e/Lmf*expo_age*1E+06));
+    N10pb=N10n_pb+N10ms_pb+N10mf_pb;
     
     % Monte-Carlo for the error of post-burial 10Be
     cache=zeros(1,simulation_times);
@@ -83,24 +84,24 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
         rand_expo_age=expo_age_est(randi([1,n]));
         if option.flag2==1  % use erosion rate
             rand_e=e_est(randi([1,n2]));
-            rand_N10n_pb_max=rand_P10n_z/(1/rand_tau_10/1E+06+rho*rand_e/Ln)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Ln*rand_expo_age*1E+06));
-            rand_N10ms_pb_max=rand_P10ms_z/(1/rand_tau_10/1E+06+rho*rand_e/Lms)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Lms*rand_expo_age*1E+06));
-            rand_N10mf_pb_max=rand_P10mf_z/(1/rand_tau_10/1E+06+rho*rand_e/Lmf)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Lmf*rand_expo_age*1E+06));
+            rand_N10n_pb=rand_P10n_z/(1/rand_tau_10/1E+06+rho*rand_e/Ln)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Ln*rand_expo_age*1E+06));
+            rand_N10ms_pb=rand_P10ms_z/(1/rand_tau_10/1E+06+rho*rand_e/Lms)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Lms*rand_expo_age*1E+06));
+            rand_N10mf_pb=rand_P10mf_z/(1/rand_tau_10/1E+06+rho*rand_e/Lmf)*(1-exp(-rand_expo_age/rand_tau_10-rho*rand_e/Lmf*rand_expo_age*1E+06));
         elseif option.flag2==0  % no erosion rate
-            rand_N10n_pb_max=rand_P10n_z/(1/rand_tau_10/1E+06+rho*e/Ln)*(1-exp(-rand_expo_age/rand_tau_10-rho*e/Ln*rand_expo_age*1E+06));
-            rand_N10ms_pb_max=rand_P10ms_z/(1/rand_tau_10/1E+06+rho*e/Lms)*(1-exp(-rand_expo_age/rand_tau_10-rho*e/Lms*rand_expo_age*1E+06));
-            rand_N10mf_pb_max=rand_P10mf_z/(1/rand_tau_10/1E+06+rho*e/Lmf)*(1-exp(-rand_expo_age/rand_tau_10-rho*e/Lmf*rand_expo_age*1E+06));
+            rand_N10n_pb=rand_P10n_z/(1/rand_tau_10/1E+06+rho*e/Ln)*(1-exp(-rand_expo_age/rand_tau_10-rho*e/Ln*rand_expo_age*1E+06));
+            rand_N10ms_pb=rand_P10ms_z/(1/rand_tau_10/1E+06+rho*e/Lms)*(1-exp(-rand_expo_age/rand_tau_10-rho*e/Lms*rand_expo_age*1E+06));
+            rand_N10mf_pb=rand_P10mf_z/(1/rand_tau_10/1E+06+rho*e/Lmf)*(1-exp(-rand_expo_age/rand_tau_10-rho*e/Lmf*rand_expo_age*1E+06));
         end
-        rand_N10pb=rand_N10n_pb_max+rand_N10ms_pb_max+rand_N10mf_pb_max;
+        rand_N10pb=rand_N10n_pb+rand_N10ms_pb+rand_N10mf_pb;
         cache(i)=(rand_N10pb);
     end
     sigma_N10pb=std(cache);
 
     % post-burial 26Al (eqn6 in Lal, 1991)
-    N26n_pb_max=P26n_z/(1/tau_26/1E+06+rho*e/Ln)*(1-exp(-expo_age/tau_26-rho*e/Ln*expo_age*1E+06));
-    N26ms_pb_max=P26ms_z/(1/tau_26/1E+06+rho*e/Lms)*(1-exp(-expo_age/tau_26-rho*e/Lms*expo_age*1E+06));
-    N26mf_pb_max=P26mf_z/(1/tau_26/1E+06+rho*e/Lmf)*(1-exp(-expo_age/tau_26-rho*e/Lmf*expo_age*1E+06));
-    N26pb=N26n_pb_max+N26ms_pb_max+N26mf_pb_max;
+    N26n_pb=P26n_z/(1/tau_26/1E+06+rho*e/Ln)*(1-exp(-expo_age/tau_26-rho*e/Ln*expo_age*1E+06));
+    N26ms_pb=P26ms_z/(1/tau_26/1E+06+rho*e/Lms)*(1-exp(-expo_age/tau_26-rho*e/Lms*expo_age*1E+06));
+    N26mf_pb=P26mf_z/(1/tau_26/1E+06+rho*e/Lmf)*(1-exp(-expo_age/tau_26-rho*e/Lmf*expo_age*1E+06));
+    N26pb=N26n_pb+N26ms_pb+N26mf_pb;
 
     % Monte-Carlo for the error of post-burial 26Al
     cache=zeros(1,simulation_times);
@@ -112,15 +113,15 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
         rand_expo_age=expo_age_est(randi([1,n]));
         if option.flag2==1  % use erosion rate
             rand_e=e_est(randi([1,n2]));
-            rand_N26n_pb_max=rand_P26n_z/(1/rand_tau_26/1E+06+rho*rand_e/Ln)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Ln*rand_expo_age*1E+06));
-            rand_N26ms_pb_max=rand_P26ms_z/(1/rand_tau_26/1E+06+rho*rand_e/Lms)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Lms*rand_expo_age*1E+06));
-            rand_N26mf_pb_max=rand_P26mf_z/(1/rand_tau_26/1E+06+rho*rand_e/Lmf)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Lmf*rand_expo_age*1E+06));
+            rand_N26n_pb=rand_P26n_z/(1/rand_tau_26/1E+06+rho*rand_e/Ln)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Ln*rand_expo_age*1E+06));
+            rand_N26ms_pb=rand_P26ms_z/(1/rand_tau_26/1E+06+rho*rand_e/Lms)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Lms*rand_expo_age*1E+06));
+            rand_N26mf_pb=rand_P26mf_z/(1/rand_tau_26/1E+06+rho*rand_e/Lmf)*(1-exp(-rand_expo_age/rand_tau_26-rho*rand_e/Lmf*rand_expo_age*1E+06));
         elseif option.flag2==0  % no erosion rate
-            rand_N26n_pb_max=rand_P26n_z/(1/rand_tau_26/1E+06+rho*e/Ln)*(1-exp(-rand_expo_age/rand_tau_26-rho*e/Ln*rand_expo_age*1E+06));
-            rand_N26ms_pb_max=rand_P26ms_z/(1/rand_tau_26/1E+06+rho*e/Lms)*(1-exp(-rand_expo_age/rand_tau_26-rho*e/Lms*rand_expo_age*1E+06));
-            rand_N26mf_pb_max=rand_P26mf_z/(1/rand_tau_26/1E+06+rho*e/Lmf)*(1-exp(-rand_expo_age/rand_tau_26-rho*e/Lmf*rand_expo_age*1E+06));
+            rand_N26n_pb=rand_P26n_z/(1/rand_tau_26/1E+06+rho*e/Ln)*(1-exp(-rand_expo_age/rand_tau_26-rho*e/Ln*rand_expo_age*1E+06));
+            rand_N26ms_pb=rand_P26ms_z/(1/rand_tau_26/1E+06+rho*e/Lms)*(1-exp(-rand_expo_age/rand_tau_26-rho*e/Lms*rand_expo_age*1E+06));
+            rand_N26mf_pb=rand_P26mf_z/(1/rand_tau_26/1E+06+rho*e/Lmf)*(1-exp(-rand_expo_age/rand_tau_26-rho*e/Lmf*rand_expo_age*1E+06));
         end
-        rand_N26pb=rand_N26n_pb_max+rand_N26ms_pb_max+rand_N26mf_pb_max;
+        rand_N26pb=rand_N26n_pb+rand_N26ms_pb+rand_N26mf_pb;
         cache(i)=(rand_N26pb);
     end
     sigma_N26pb=std(cache);
