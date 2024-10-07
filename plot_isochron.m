@@ -1,6 +1,6 @@
 function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,Rs,option)
 
-%% Plot the isochron line, production ratio line, and errorbars of samples and maximum estimation of post-burial concentration
+%% Plot the isochron line, production ratio line, and errorbars of samples and upper limit of the post-burial concentration
 
 %% Arguments:
 % a: the intercept of the isochron line (atom/g/yr; scalar)
@@ -17,8 +17,8 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,Rs,
 % Rs: production rate ratio of 26Al versus 10Be at the surface (unitless;
 % scalar)
 % option have fields as:
-%   option.flag: "0" for default usage, "1" for minimum estimation, and "2"
-%   for maximum estimation (unitless; scalar)
+%   option.flag: "0" for default usage, "1" for lower limit , and "2" for 
+%   upper limit (unitless; scalar)
 %   option.Npb:
 %       option.Npb.x: post-burial 10Be concentration (atom/g; scalar)
 %       option.Npb.dx: 1 sigma absolute error of 10Be (atom/g; scalar)
@@ -66,13 +66,13 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,Rs,
         title('Original Isochron Burial Dating'),
         plot(X,Y1,'k',X,Y2,'m'),
     elseif option.flag==1
-        fig=figure('Name','Minimum Isochron Burial Dating');
-        title('Minimum Isochron Burial Dating'),
+        fig=figure('Name','Lower Limit of the Burial Age');
+        title('Lower Limit of the Burial Age'),
         plot(X,Y1,'b',X,Y2,'m'),
     elseif option.flag==2
         Y0 = option.Rd*X;
-        fig=figure('Name','Maximum Isochron Burial Dating');
-        title('Maximum Isochron Burial Dating'),
+        fig=figure('Name','Upper Limit of the Burial Age');
+        title('Upper Limit of the Burial Age'),
         plot(X,Y1,'r',X,Y2,'m',X,Y0,'g'),
     end
     xlabel('10Be Concentration (atom/g)'),
