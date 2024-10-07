@@ -187,9 +187,9 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,Rs,
     if option.flag==0
         print(fig,'-painters','-dpdf','isochron');
     elseif option.flag==1
-        print(fig,'-painters','-dpdf','min');
+        print(fig,'-painters','-dpdf','lower limit');
     elseif option.flag==2
-        print(fig,'-painters','-dpdf','max');
+        print(fig,'-painters','-dpdf','upper limit');
     end
     
     % sub-function
