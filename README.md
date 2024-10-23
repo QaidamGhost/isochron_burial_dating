@@ -1,6 +1,6 @@
 **MATLAB scripts for calculating isochron burial age using paired cosmogenic nuclides.**
 
-**June 10, 2022**
+**October 18, 2024**
 
 The MATLAB script "york.m" is ported from "York.R" which was written in R language and included in a toolbox called IsoplotR by Vermeesch, 2018. The "york_fixed_intercept.m" is modified after an unpublished R script written by Pieter Vermeesch (personal communication). The "production_rate.m" is modified after a MATLAB script "CNP.m" developed by Maarten Lupker, Chia-Yu Chen, Richard Ott, Erica Erlanger, and Yanyan Wang (Lupker et al., 2012). Other .m-files in this directory are written by Yizhou Yang. **See file "NOTICE" for copyright and licensing notice pertaining to all .mat and .m-files in the following list.**
 
