@@ -33,7 +33,7 @@ function [N10pb,sigma_N10pb,N26pb,sigma_N26pb] = Npb_depth(measured_lat,measured
 % variables "expo_age" (cm/Kyr; scalar; the most probable value of the
 % simulations of erosion rate) and "expo_age_est" (cm/Kyr; nx1 vector; the
 % simulations of erosion rate during each simulation).
-% If you want to calculate upper limit of the isochron burial age and 
+% If you want to calculate lower limit of the isochron burial age and 
 % already know the value and absolate 1 sigma error of erosion rate and 
 % exposure age, you can use "custom_mat_files.m" to generate "e.mat" and 
 % "expo_age.mat".
