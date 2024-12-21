@@ -17,8 +17,8 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,Rs,
 % Rs: production rate ratio of 26Al versus 10Be at the surface (unitless;
 % scalar)
 % option have fields as:
-%   option.flag: "0" for default usage, "1" for lower limit , and "2" for 
-%   upper limit (unitless; scalar)
+%   option.flag: "0" for default usage, "1" for upper limit , and "2" for 
+%   lower limit (unitless; scalar)
 %   option.Npb:
 %       option.Npb.x: post-burial 10Be concentration (atom/g; scalar)
 %       option.Npb.dx: 1 sigma absolute error of 10Be (atom/g; scalar)
@@ -66,13 +66,13 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,Rs,
         title('Original Isochron Burial Dating'),
         plot(X,Y1,'k',X,Y2,'m'),
     elseif option.flag==1
-        fig=figure('Name','Lower Limit of the Burial Age');
-        title('Lower Limit of the Burial Age'),
+        fig=figure('Name','Upper Limit of the Burial Age');
+        title('Upper Limit of the Burial Age'),
         plot(X,Y1,'b',X,Y2,'m'),
     elseif option.flag==2
         Y0 = option.Rd*X;
-        fig=figure('Name','Upper Limit of the Burial Age');
-        title('Upper Limit of the Burial Age'),
+        fig=figure('Name','Lower Limit of the Burial Age');
+        title('Lower Limit of the Burial Age'),
         plot(X,Y1,'r',X,Y2,'m',X,Y0,'g'),
     end
     xlabel('10Be Concentration (atom/g)'),
@@ -187,9 +187,9 @@ function plot_isochron(a,sigma_a,b,sigma_b,linearized_data,data,removed_data,Rs,
     if option.flag==0
         print(fig,'-painters','-dpdf','isochron');
     elseif option.flag==1
-        print(fig,'-painters','-dpdf','lower limit');
-    elseif option.flag==2
         print(fig,'-painters','-dpdf','upper limit');
+    elseif option.flag==2
+        print(fig,'-painters','-dpdf','lower limit');
     end
     
     % sub-function
