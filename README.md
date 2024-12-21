@@ -6,7 +6,7 @@ The MATLAB script "york.m" is ported from "York.R" which was written in R langua
 
 ## List of .mat and .m-files
  - consts.mat: constants for calculation, including Stone's scaling parameters, mean lives of 10Be and 26Al, alpha as the cutoff value, step for KDE, simulation times, SLHL production rates, the limit for iterations, and attenuation lengths of nuclide and muons.
- - custom_mat_files: Generate custom "e.mat" and "expo_age.mat" before constraining the upper limit of the post-burial concentrations and burial age if erosion rates and exposure age have already been known.
+ - custom_mat_files: Generate custom "e.mat" and "expo_age.mat" before constraining the upper limit of the post-burial concentrations and lower limit of the burial age if erosion rates and exposure age have already been known.
  - isochron_burial_age: An iteration process to calculate isochron line for burial dating following Erlanger et al., 2012; Erlanger, 2010; Granger, 2014
  - KDE: Find the most probable value and 1 sigma absolute error for the observed simulations of a random variable after establishing the probability density function by a "nonparametric estimation" approach known as kernel density estimation (KDE).
  - Npb_depth: Calculate the upper limit of the post-burial concentrations with 1 sigma error at the sampling location and penetration depth if the exposure age (and additional erosion rate) of the surface is constrained.
